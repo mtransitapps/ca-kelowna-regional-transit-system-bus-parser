@@ -47,7 +47,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 
 	@Override
 	public boolean excludeCalendar(GCalendar gCalendar) {
-		if (INCLUDE_ONLY_SERVICE_ID_CONTAINS != null && !gCalendar.service_id.contains(INCLUDE_ONLY_SERVICE_ID_CONTAINS)) {
+		if (INCLUDE_ONLY_SERVICE_ID_CONTAINS != null && !gCalendar.getServiceId().contains(INCLUDE_ONLY_SERVICE_ID_CONTAINS)) {
 			return true;
 		}
 		if (this.serviceIds != null) {
@@ -58,7 +58,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 
 	@Override
 	public boolean excludeCalendarDate(GCalendarDate gCalendarDates) {
-		if (INCLUDE_ONLY_SERVICE_ID_CONTAINS != null && !gCalendarDates.service_id.contains(INCLUDE_ONLY_SERVICE_ID_CONTAINS)) {
+		if (INCLUDE_ONLY_SERVICE_ID_CONTAINS != null && !gCalendarDates.getServiceId().contains(INCLUDE_ONLY_SERVICE_ID_CONTAINS)) {
 			return true;
 		}
 		if (this.serviceIds != null) {
@@ -71,7 +71,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 
 	@Override
 	public boolean excludeRoute(GRoute gRoute) {
-		if (!INCLUDE_AGENCY_ID.equals(gRoute.agency_id)) {
+		if (!INCLUDE_AGENCY_ID.equals(gRoute.getAgencyId())) {
 			return true;
 		}
 		return super.excludeRoute(gRoute);
@@ -79,7 +79,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 
 	@Override
 	public boolean excludeTrip(GTrip gTrip) {
-		if (INCLUDE_ONLY_SERVICE_ID_CONTAINS != null && !gTrip.service_id.contains(INCLUDE_ONLY_SERVICE_ID_CONTAINS)) {
+		if (INCLUDE_ONLY_SERVICE_ID_CONTAINS != null && !gTrip.getServiceId().contains(INCLUDE_ONLY_SERVICE_ID_CONTAINS)) {
 			return true;
 		}
 		if (this.serviceIds != null) {
@@ -95,13 +95,13 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 
 	@Override
 	public long getRouteId(GRoute gRoute) {
-		return Long.parseLong(gRoute.route_short_name); // use route short name as route ID
+		return Long.parseLong(gRoute.getRouteShortName()); // use route short name as route ID
 	}
 
 	@Override
 	public String getRouteLongName(GRoute gRoute) {
-		String routeLongName = gRoute.route_long_name;
-		routeLongName = CleanUtils.CLEAN_SLASHES.matcher(routeLongName).replaceAll(CleanUtils.CLEAN_SLASHES_REPLACEMENT);
+		String routeLongName = gRoute.getRouteLongName();
+		routeLongName = CleanUtils.cleanSlashes(routeLongName);
 		routeLongName = CleanUtils.cleanNumbers(routeLongName);
 		routeLongName = CleanUtils.cleanStreetTypes(routeLongName);
 		return CleanUtils.cleanLabel(routeLongName);
@@ -122,8 +122,8 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 
 	@Override
 	public String getRouteColor(GRoute gRoute) {
-		if (StringUtils.isEmpty(gRoute.route_color)) {
-			int rsn = Integer.parseInt(gRoute.route_short_name);
+		if (StringUtils.isEmpty(gRoute.getRouteColor())) {
+			int rsn = Integer.parseInt(gRoute.getRouteShortName());
 			switch (rsn) {
 			// @formatter:off
 			case 1: return COLOR_3FA0D6;
@@ -181,69 +181,69 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 	@Override
 	public void setTripHeadsign(MRoute mRoute, MTrip mTrip, GTrip gTrip, GSpec gtfs) {
 		if (mRoute.id == 1l) {
-			if (gTrip.direction_id == 1) {
-				mTrip.setHeadsignString(MISSION_REC_EXCH, gTrip.direction_id);
+			if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString(MISSION_REC_EXCH, gTrip.getDirectionId());
 				return;
 			}
 		} else if (mRoute.id == 3l) {
-			if (gTrip.direction_id == 0) {
-				mTrip.setHeadsignString(LOOP, gTrip.direction_id);
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString(LOOP, gTrip.getDirectionId());
 				return;
 			}
 		} else if (mRoute.id == 8l) {
-			if (gTrip.direction_id == 0) {
-				mTrip.setHeadsignString(UBCO_EXCH, gTrip.direction_id);
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString(UBCO_EXCH, gTrip.getDirectionId());
 				return;
-			} else if (gTrip.direction_id == 1) {
-				mTrip.setHeadsignString(OK_COLLEGE_EXCH, gTrip.direction_id);
+			} else if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString(OK_COLLEGE_EXCH, gTrip.getDirectionId());
 				return;
 			}
 		} else if (mRoute.id == 10l) {
-			if (gTrip.direction_id == 0) {
-				mTrip.setHeadsignString(RUTLAND, gTrip.direction_id);
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString(RUTLAND, gTrip.getDirectionId());
 				return;
-			} else if (gTrip.direction_id == 1) {
-				mTrip.setHeadsignString(QUEENSWAY_EXCH, gTrip.direction_id);
+			} else if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString(QUEENSWAY_EXCH, gTrip.getDirectionId());
 				return;
 			}
 		} else if (mRoute.id == 11l) {
-			if (gTrip.direction_id == 0) {
-				mTrip.setHeadsignString(RUTLAND, gTrip.direction_id);
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString(RUTLAND, gTrip.getDirectionId());
 				return;
-			} else if (gTrip.direction_id == 1) {
-				mTrip.setHeadsignString(QUEENSWAY_EXCH, gTrip.direction_id);
+			} else if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString(QUEENSWAY_EXCH, gTrip.getDirectionId());
 				return;
 			}
 		} else if (mRoute.id == 12l) {
-			if (gTrip.direction_id == 1) {
-				mTrip.setHeadsignString(OK_COLLEGE_EXCH, gTrip.direction_id);
+			if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString(OK_COLLEGE_EXCH, gTrip.getDirectionId());
 				return;
 			}
 		} else if (mRoute.id == 14l) {
-			if (gTrip.direction_id == 0) {
-				mTrip.setHeadsignString(ORCHARD_PK, gTrip.direction_id);
+			if (gTrip.getDirectionId() == 0) {
+				mTrip.setHeadsignString(ORCHARD_PK, gTrip.getDirectionId());
 				return;
-			} else if (gTrip.direction_id == 1) {
-				mTrip.setHeadsignString(BLACK_MTN, gTrip.direction_id);
+			} else if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString(BLACK_MTN, gTrip.getDirectionId());
 				return;
 			}
 		} else if (mRoute.id == 21l) {
-			if (gTrip.direction_id == 1) {
-				mTrip.setHeadsignString(GLENROSA, gTrip.direction_id);
+			if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString(GLENROSA, gTrip.getDirectionId());
 				return;
 			}
 		} else if (mRoute.id == 23l) {
-			if (gTrip.direction_id == 1) {
-				mTrip.setHeadsignString(LK_COUNTRY, gTrip.direction_id);
+			if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString(LK_COUNTRY, gTrip.getDirectionId());
 				return;
 			}
 		} else if (mRoute.id == 97l) {
-			if (gTrip.direction_id == 1) {
-				mTrip.setHeadsignString(WESTBANK_EXCH, gTrip.direction_id);
+			if (gTrip.getDirectionId() == 1) {
+				mTrip.setHeadsignString(WESTBANK_EXCH, gTrip.getDirectionId());
 				return;
 			}
 		}
-		mTrip.setHeadsignString(cleanTripHeadsign(gTrip.trip_headsign), gTrip.direction_id);
+		mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), gTrip.getDirectionId());
 	}
 
 	private static final Pattern EXCHANGE = Pattern.compile("((^|\\W){1}(exchange)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
