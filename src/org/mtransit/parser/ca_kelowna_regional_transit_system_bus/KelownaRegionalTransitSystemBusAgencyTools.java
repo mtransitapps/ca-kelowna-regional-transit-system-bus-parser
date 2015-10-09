@@ -180,17 +180,17 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 
 	@Override
 	public void setTripHeadsign(MRoute mRoute, MTrip mTrip, GTrip gTrip, GSpec gtfs) {
-		if (mRoute.id == 1l) {
+		if (mRoute.getId() == 1l) {
 			if (gTrip.getDirectionId() == 1) {
 				mTrip.setHeadsignString(MISSION_REC_EXCH, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 3l) {
+		} else if (mRoute.getId() == 3l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(LOOP, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 8l) {
+		} else if (mRoute.getId() == 8l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(UBCO_EXCH, gTrip.getDirectionId());
 				return;
@@ -198,7 +198,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				mTrip.setHeadsignString(OK_COLLEGE_EXCH, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 10l) {
+		} else if (mRoute.getId() == 10l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(RUTLAND, gTrip.getDirectionId());
 				return;
@@ -206,7 +206,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				mTrip.setHeadsignString(QUEENSWAY_EXCH, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 11l) {
+		} else if (mRoute.getId() == 11l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(RUTLAND, gTrip.getDirectionId());
 				return;
@@ -214,12 +214,12 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				mTrip.setHeadsignString(QUEENSWAY_EXCH, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 12l) {
+		} else if (mRoute.getId() == 12l) {
 			if (gTrip.getDirectionId() == 1) {
 				mTrip.setHeadsignString(OK_COLLEGE_EXCH, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 14l) {
+		} else if (mRoute.getId() == 14l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(ORCHARD_PK, gTrip.getDirectionId());
 				return;
@@ -227,17 +227,17 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				mTrip.setHeadsignString(BLACK_MTN, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 21l) {
+		} else if (mRoute.getId() == 21l) {
 			if (gTrip.getDirectionId() == 1) {
 				mTrip.setHeadsignString(GLENROSA, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 23l) {
+		} else if (mRoute.getId() == 23l) {
 			if (gTrip.getDirectionId() == 1) {
 				mTrip.setHeadsignString(LK_COUNTRY, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 97l) {
+		} else if (mRoute.getId() == 97l) {
 			if (gTrip.getDirectionId() == 1) {
 				mTrip.setHeadsignString(WESTBANK_EXCH, gTrip.getDirectionId());
 				return;
@@ -278,13 +278,11 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 
 	private static final Pattern STARTS_WITH_BOUND = Pattern.compile("(^(east|west|north|south)bound)", Pattern.CASE_INSENSITIVE);
 
-	private static final Pattern AT = Pattern.compile("( at )", Pattern.CASE_INSENSITIVE);
-	private static final String AT_REPLACEMENT = " / ";
 
 	@Override
 	public String cleanStopName(String gStopName) {
 		gStopName = STARTS_WITH_BOUND.matcher(gStopName).replaceAll(StringUtils.EMPTY);
-		gStopName = AT.matcher(gStopName).replaceAll(AT_REPLACEMENT);
+		gStopName = CleanUtils.CLEAN_AT.matcher(gStopName).replaceAll(CleanUtils.CLEAN_AT_REPLACEMENT);
 		gStopName = EXCHANGE.matcher(gStopName).replaceAll(EXCHANGE_REPLACEMENT);
 		gStopName = CleanUtils.cleanStreetTypes(gStopName);
 		gStopName = CleanUtils.cleanNumbers(gStopName);
