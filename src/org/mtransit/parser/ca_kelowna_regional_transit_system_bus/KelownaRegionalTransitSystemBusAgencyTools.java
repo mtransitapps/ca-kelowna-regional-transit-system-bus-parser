@@ -1,6 +1,7 @@
 package org.mtransit.parser.ca_kelowna_regional_transit_system_bus;
 
 import java.util.HashSet;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
@@ -166,93 +167,111 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 	}
 
 	private static final String EXCH = "Exch";
+	private static final String S_PANDOSY = "S.Pandosy";
+	private static final String S_PANDOSY_EXCH = S_PANDOSY + " " + EXCH;
 	private static final String MISSION_REC_EXCH = "Mission Rec " + EXCH;
-	private static final String LOOP = "Loop";
-	private static final String UBCO_EXCH = "UBCO " + EXCH;
+	private static final String UBCO = "UBCO";
 	private static final String RUTLAND = "Rutland";
 	private static final String QUEENSWAY_EXCH = "Queensway " + EXCH;
-	private static final String OK_COLLEGE_EXCH = "OK College " + EXCH;
+	private static final String OK_COLLEGE = "OK College";
 	private static final String ORCHARD_PK = "Orchard Pk";
-	private static final String BLACK_MTN = "Black Mtn";
+	private static final String ORCHARD_PK_EXCH = ORCHARD_PK + " " + EXCH;
 	private static final String GLENROSA = "Glenrosa";
 	private static final String LK_COUNTRY = "Lk Country";
-	private static final String WESTBANK_EXCH = "Westbank " + EXCH;
+	private static final String WESTBANK = "Westbank";
+	private static final String WESTBANK_CTR = WESTBANK + " " + "Ctr";
+	private static final String PEACHLAND = "Peachland";
+	private static final String DILWORTH = "Dilworth";
 
 	@Override
 	public void setTripHeadsign(MRoute mRoute, MTrip mTrip, GTrip gTrip, GSpec gtfs) {
-		if (mRoute.getId() == 1l) {
-			if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(MISSION_REC_EXCH, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 3l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString(LOOP, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 8l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString(UBCO_EXCH, gTrip.getDirectionId());
-				return;
-			} else if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(OK_COLLEGE_EXCH, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 10l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString(RUTLAND, gTrip.getDirectionId());
-				return;
-			} else if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(QUEENSWAY_EXCH, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 11l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString(RUTLAND, gTrip.getDirectionId());
-				return;
-			} else if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(QUEENSWAY_EXCH, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 12l) {
-			if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(OK_COLLEGE_EXCH, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 14l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString(ORCHARD_PK, gTrip.getDirectionId());
-				return;
-			} else if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(BLACK_MTN, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 21l) {
-			if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(GLENROSA, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 23l) {
-			if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(LK_COUNTRY, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 97l) {
-			if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(WESTBANK_EXCH, gTrip.getDirectionId());
-				return;
-			}
-		}
 		mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), gTrip.getDirectionId());
 	}
 
-	private static final Pattern EXCHANGE = Pattern.compile("((^|\\W){1}(exchange)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
+	@Override
+	public boolean mergeHeadsign(MTrip mTrip, MTrip mTripToMerge) {
+		if (mTrip.getRouteId() == 1l) {
+			if (mTrip.getHeadsignId() == 1) {
+				mTrip.setHeadsignString(MISSION_REC_EXCH, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 3l) {
+			if (mTrip.getHeadsignId() == 0) {
+				mTrip.setHeadsignString(DILWORTH, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 7l) {
+			if (mTrip.getHeadsignId() == 0) {
+				mTrip.setHeadsignString(ORCHARD_PK_EXCH, mTrip.getHeadsignId());
+				return true;
+			} else if (mTrip.getHeadsignId() == 1) {
+				mTrip.setHeadsignString(QUEENSWAY_EXCH, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 8l) {
+			if (mTrip.getHeadsignId() == 0) {
+				mTrip.setHeadsignString(UBCO, mTrip.getHeadsignId());
+				return true;
+			} else if (mTrip.getHeadsignId() == 1) {
+				mTrip.setHeadsignString(OK_COLLEGE, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 10l) {
+			if (mTrip.getHeadsignId() == 1) {
+				mTrip.setHeadsignString(QUEENSWAY_EXCH, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 11l) {
+			if (mTrip.getHeadsignId() == 0) {
+				mTrip.setHeadsignString(RUTLAND, mTrip.getHeadsignId());
+				return true;
+			} else if (mTrip.getHeadsignId() == 1) {
+				mTrip.setHeadsignString(QUEENSWAY_EXCH, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 12l) {
+			if (mTrip.getHeadsignId() == 1) {
+				mTrip.setHeadsignString(S_PANDOSY_EXCH, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 14l) {
+			if (mTrip.getHeadsignId() == 0) {
+				mTrip.setHeadsignString(ORCHARD_PK, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 21l) {
+			if (mTrip.getHeadsignId() == 1) {
+				mTrip.setHeadsignString(GLENROSA, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 22l) {
+			if (mTrip.getHeadsignId() == 1) {
+				mTrip.setHeadsignString(PEACHLAND, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 23l) {
+			if (mTrip.getHeadsignId() == 1) {
+				mTrip.setHeadsignString(LK_COUNTRY, mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 97l) {
+			if (mTrip.getHeadsignId() == 1) {
+				mTrip.setHeadsignString(WESTBANK_CTR, mTrip.getHeadsignId());
+				return true;
+			}
+		}
+		System.out.printf("\nUnexpected trips to merge %s & %s!\n", mTrip, mTripToMerge);
+		System.exit(-1);
+		return false;
+	}
+
+	private static final Pattern EXCHANGE = Pattern.compile("((^|\\W){1}(exchange|ex)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
 	private static final String EXCHANGE_REPLACEMENT = "$2" + EXCH + "$4";
 
 	private static final Pattern STARTS_WITH_NUMBER = Pattern.compile("(^[\\d]+[\\S]*)", Pattern.CASE_INSENSITIVE);
 
-	private static final Pattern ENDS_WITH_VIA = Pattern.compile("( via .*$)", Pattern.CASE_INSENSITIVE);
-	private static final Pattern STARTS_WITH_TO = Pattern.compile("(^.* to )", Pattern.CASE_INSENSITIVE);
+	private static final Pattern TO = Pattern.compile("((^|\\W){1}(to)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
+	private static final Pattern VIA = Pattern.compile("((^|\\W){1}(via)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
 
 	private static final Pattern AND = Pattern.compile("( and )", Pattern.CASE_INSENSITIVE);
 	private static final String AND_REPLACEMENT = " & ";
@@ -264,9 +283,17 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 
 	@Override
 	public String cleanTripHeadsign(String tripHeadsign) {
+		Matcher matcherTO = TO.matcher(tripHeadsign);
+		if (matcherTO.find()) {
+			String gTripHeadsignAfterTO = tripHeadsign.substring(matcherTO.end());
+			tripHeadsign = gTripHeadsignAfterTO;
+		}
+		Matcher matcherVIA = VIA.matcher(tripHeadsign);
+		if (matcherVIA.find()) {
+			String gTripHeadsignBeforeVIA = tripHeadsign.substring(0, matcherVIA.start());
+			tripHeadsign = gTripHeadsignBeforeVIA;
+		}
 		tripHeadsign = EXCHANGE.matcher(tripHeadsign).replaceAll(EXCHANGE_REPLACEMENT);
-		tripHeadsign = ENDS_WITH_VIA.matcher(tripHeadsign).replaceAll(StringUtils.EMPTY);
-		tripHeadsign = STARTS_WITH_TO.matcher(tripHeadsign).replaceAll(StringUtils.EMPTY);
 		tripHeadsign = AND.matcher(tripHeadsign).replaceAll(AND_REPLACEMENT);
 		tripHeadsign = CLEAN_P1.matcher(tripHeadsign).replaceAll(CLEAN_P1_REPLACEMENT);
 		tripHeadsign = CLEAN_P2.matcher(tripHeadsign).replaceAll(CLEAN_P2_REPLACEMENT);
@@ -278,7 +305,6 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 	}
 
 	private static final Pattern STARTS_WITH_BOUND = Pattern.compile("(^(east|west|north|south)bound)", Pattern.CASE_INSENSITIVE);
-
 
 	@Override
 	public String cleanStopName(String gStopName) {
