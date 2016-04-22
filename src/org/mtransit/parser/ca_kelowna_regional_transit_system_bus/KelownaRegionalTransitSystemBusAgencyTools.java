@@ -1,19 +1,29 @@
 package org.mtransit.parser.ca_kelowna_regional_transit_system_bus;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.mtransit.parser.DefaultAgencyTools;
+import org.mtransit.parser.Pair;
+import org.mtransit.parser.SplitUtils;
 import org.mtransit.parser.Utils;
+import org.mtransit.parser.SplitUtils.RouteTripSpec;
 import org.mtransit.parser.gtfs.data.GCalendar;
 import org.mtransit.parser.gtfs.data.GCalendarDate;
 import org.mtransit.parser.gtfs.data.GRoute;
 import org.mtransit.parser.gtfs.data.GSpec;
+import org.mtransit.parser.gtfs.data.GStop;
 import org.mtransit.parser.gtfs.data.GTrip;
+import org.mtransit.parser.gtfs.data.GTripStop;
 import org.mtransit.parser.mt.data.MAgency;
 import org.mtransit.parser.mt.data.MRoute;
+import org.mtransit.parser.mt.data.MTripStop;
 import org.mtransit.parser.CleanUtils;
 import org.mtransit.parser.mt.data.MTrip;
 
@@ -167,11 +177,13 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 	}
 
 	private static final String EXCH = "Exch";
+	private static final String BLACK_MOUNTAIN = "Black Mtn";
 	private static final String S_PANDOSY = "S.Pandosy";
 	private static final String S_PANDOSY_EXCH = S_PANDOSY + " " + EXCH;
 	private static final String MISSION_REC_EXCH = "Mission Rec " + EXCH;
 	private static final String UBCO = "UBCO";
 	private static final String RUTLAND = "Rutland";
+	private static final String RUTLAND_EXCH = RUTLAND + " " + EXCH;
 	private static final String QUEENSWAY_EXCH = "Queensway " + EXCH;
 	private static final String OK_COLLEGE = "OK College";
 	private static final String ORCHARD_PK = "Orchard Pk";
@@ -183,8 +195,53 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 	private static final String PEACHLAND = "Peachland";
 	private static final String DILWORTH = "Dilworth";
 
+	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
+	static {
+		HashMap<Long, RouteTripSpec> map2 = new HashMap<Long, RouteTripSpec>();
+		map2.put(14l, new RouteTripSpec(14l, //
+				0, MTrip.HEADSIGN_TYPE_STRING, RUTLAND_EXCH, // ORCHARD_PK, //
+				1, MTrip.HEADSIGN_TYPE_STRING, BLACK_MOUNTAIN) //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"103557", "103501", "103193" //
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"103193", "103378", "103515", "103557" //
+						})) //
+				.compileBothTripSort());
+		ALL_ROUTE_TRIPS2 = map2;
+	}
+
+	@Override
+	public int compareEarly(long routeId, List<MTripStop> list1, List<MTripStop> list2, MTripStop ts1, MTripStop ts2, GStop ts1GStop, GStop ts2GStop) {
+		if (ALL_ROUTE_TRIPS2.containsKey(routeId)) {
+			return ALL_ROUTE_TRIPS2.get(routeId).compare(routeId, list1, list2, ts1, ts2, ts1GStop, ts2GStop);
+		}
+		return super.compareEarly(routeId, list1, list2, ts1, ts2, ts1GStop, ts2GStop);
+	}
+
+	@Override
+	public ArrayList<MTrip> splitTrip(MRoute mRoute, GTrip gTrip, GSpec gtfs) {
+		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
+			return ALL_ROUTE_TRIPS2.get(mRoute.getId()).getAllTrips();
+		}
+		return super.splitTrip(mRoute, gTrip, gtfs);
+	}
+
+	@Override
+	public Pair<Long[], Integer[]> splitTripStop(MRoute mRoute, GTrip gTrip, GTripStop gTripStop, ArrayList<MTrip> splitTrips, GSpec routeGTFS) {
+		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
+			return SplitUtils.splitTripStop(mRoute, gTrip, gTripStop, routeGTFS, ALL_ROUTE_TRIPS2.get(mRoute.getId()));
+		}
+		return super.splitTripStop(mRoute, gTrip, gTripStop, splitTrips, routeGTFS);
+	}
+
 	@Override
 	public void setTripHeadsign(MRoute mRoute, MTrip mTrip, GTrip gTrip, GSpec gtfs) {
+		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
+			return; // split
+		}
 		mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), gTrip.getDirectionId());
 	}
 
