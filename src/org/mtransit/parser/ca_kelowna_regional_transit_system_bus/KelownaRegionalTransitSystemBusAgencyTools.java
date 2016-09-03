@@ -274,7 +274,10 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				return true;
 			}
 		} else if (mTrip.getRouteId() == 10l) {
-			if (mTrip.getHeadsignId() == 1) {
+			if (mTrip.getHeadsignId() == 0) {
+				mTrip.setHeadsignString(RUTLAND, mTrip.getHeadsignId());
+				return true;
+			} else if (mTrip.getHeadsignId() == 1) {
 				mTrip.setHeadsignString(QUEENSWAY_EXCH, mTrip.getHeadsignId());
 				return true;
 			}
