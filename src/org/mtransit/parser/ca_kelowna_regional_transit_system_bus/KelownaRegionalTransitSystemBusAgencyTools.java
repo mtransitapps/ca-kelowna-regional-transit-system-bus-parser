@@ -27,9 +27,8 @@ import org.mtransit.parser.mt.data.MTripStop;
 import org.mtransit.parser.CleanUtils;
 import org.mtransit.parser.mt.data.MTrip;
 
-// http://bctransit.com/*/footer/open-data
-// http://bctransit.com/servlet/bctransit/data/GTFS.zip
-// http://bct2.baremetal.com:8080/GoogleTransit/BCTransit/google_transit.zip
+// https://bctransit.com/*/footer/open-data
+// https://bctransit.com/servlet/bctransit/data/GTFS - Kelowna
 public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	public static void main(String[] args) {
@@ -119,6 +118,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 	}
 
 	private static final String AGENCY_COLOR_GREEN = "34B233";// GREEN (from PDF Corporate Graphic Standards)
+	private static final String AGENCY_COLOR_BLUE = "002C77"; // BLUE (from PDF Corporate Graphic Standards)
 
 	private static final String AGENCY_COLOR = AGENCY_COLOR_GREEN;
 
@@ -168,6 +168,9 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 			case 97: return COLOR_F17C15;
 			// @formatter:on
 			default:
+				if (isGoodEnoughAccepted()) {
+					return AGENCY_COLOR_BLUE;
+				}
 				System.out.println("Unexpected route color " + gRoute);
 				System.exit(-1);
 				return null;
@@ -177,6 +180,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 	}
 
 	private static final String EXCH = "Exch";
+
 	private static final String BLACK_MOUNTAIN = "Black Mtn";
 	private static final String S_PANDOSY = "S.Pandosy";
 	private static final String S_PANDOSY_EXCH = S_PANDOSY + " " + EXCH;
@@ -247,6 +251,14 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 
 	@Override
 	public boolean mergeHeadsign(MTrip mTrip, MTrip mTripToMerge) {
+		if (!isGoodEnoughAccepted()) {
+			if (false) {
+				return false; // TODO clean this
+			}
+			System.out.printf("\nUnexpected trips to merge %s & %s!\n", mTrip, mTripToMerge);
+			System.exit(-1);
+			return false;
+		}
 		if (mTrip.getRouteId() == 1l) {
 			if (mTrip.getHeadsignId() == 1) {
 				mTrip.setHeadsignString(MISSION_REC_EXCH, mTrip.getHeadsignId());
@@ -319,6 +331,9 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				mTrip.setHeadsignString(WESTBANK_CTR, mTrip.getHeadsignId());
 				return true;
 			}
+		}
+		if (isGoodEnoughAccepted()) {
+			return super.mergeHeadsign(mTrip, mTripToMerge);
 		}
 		System.out.printf("\nUnexpected trips to merge %s & %s!\n", mTrip, mTripToMerge);
 		System.exit(-1);
