@@ -195,6 +195,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 	private static final String EXCH = "Exch";
 
 	private static final String BLACK_MOUNTAIN = "Black Mtn";
+	private static final String SOUTH_PANDOSY = "South Pandosy";
 	private static final String S_PANDOSY = "S.Pandosy";
 	private static final String S_PANDOSY_EXCH = S_PANDOSY + " " + EXCH;
 	private static final String MISSION_REC_EXCH = "Mission Rec " + EXCH;
@@ -526,7 +527,8 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 		}
 		if (mRoute.getId() == 1L) {
 			if (gTrip.getDirectionId() == 0) { // Downtown - NORTH
-				if ("Downtown".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+				if ("Downtown".equalsIgnoreCase(gTrip.getTripHeadsign()) //
+						|| "".equalsIgnoreCase(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.NORTH);
 					return;
 				}
@@ -607,6 +609,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 		} else if (mRoute.getId() == 12L) {
 			if (gTrip.getDirectionId() == 0) { // S.Pandosy Exch - WEST
 				if ("McCulloch - To Orchard Park".equalsIgnoreCase(gTrip.getTripHeadsign()) //
+						|| "McCulloch - To South Pandosy".equalsIgnoreCase(gTrip.getTripHeadsign()) //
 						|| "McCulloch to S.Pandosy Exch".equalsIgnoreCase(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.WEST);
 					return;
@@ -699,6 +702,9 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 
 	@Override
 	public boolean mergeHeadsign(MTrip mTrip, MTrip mTripToMerge) {
+		if (MTrip.mergeEmpty(mTrip, mTripToMerge)) {
+			return true;
+		}
 		List<String> headsignsValues = Arrays.asList(mTrip.getHeadsignValue(), mTripToMerge.getHeadsignValue());
 		if (mTrip.getRouteId() == 1L) {
 			if (Arrays.asList( //
@@ -746,6 +752,13 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					S_PANDOSY_EXCH //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(S_PANDOSY_EXCH, mTrip.getHeadsignId());
+				return true;
+			}
+			if (Arrays.asList( //
+					ORCHARD_PK, //
+					SOUTH_PANDOSY //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(SOUTH_PANDOSY, mTrip.getHeadsignId());
 				return true;
 			}
 		} else if (mTrip.getRouteId() == 97L) {
