@@ -267,14 +267,19 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				.addTripSort(StrategicMappingCommons.EAST, //
 						Arrays.asList(new String[] { //
 						Stops.ALL_STOPS.get("102854"), // Queensway Exchange Bay J
-								Stops.ALL_STOPS.get("140151"), // Rutland Exchange Bay E
-								Stops.ALL_STOPS.get("103327"), // Fitzpatrick at Findlay => CONTINUE
+								Stops.ALL_STOPS.get("140151"), "308", // Rutland Exchange Bay E
+								Stops.ALL_STOPS.get("103292"), // != Franklyn at McCurdy
+								Stops.ALL_STOPS.get("103283"), // <> McCurdy at Mayfair
+								Stops.ALL_STOPS.get("103327"), // <> Fitzpatrick at Findlay => CONTINUE
 						})) //
 				.addTripSort(StrategicMappingCommons.WEST, //
 						Arrays.asList(new String[] { //
 						Stops.ALL_STOPS.get("103430"), // McCurdy Rd E at Craig <= CONTINUE
-								Stops.ALL_STOPS.get("103327"), // Fitzpatrick at Findlay
-								Stops.ALL_STOPS.get("140149"), // Rutland Exchange Bay C
+								Stops.ALL_STOPS.get("103396"), // != McCurdy Rd at Keyes
+								Stops.ALL_STOPS.get("103283"), // <> McCurdy at Mayfair
+								Stops.ALL_STOPS.get("103327"), // <> Fitzpatrick at Findlay
+								Stops.ALL_STOPS.get("103343"), // != Fitzpatrick at Chichester
+								Stops.ALL_STOPS.get("140149"), "322", // Rutland Exchange Bay C
 								Stops.ALL_STOPS.get("103070"), // Orchard Park Exchange Bay B
 								Stops.ALL_STOPS.get("102854"), // Queensway Exchange Bay J
 						})) //
