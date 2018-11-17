@@ -267,7 +267,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				.addTripSort(StrategicMappingCommons.EAST, //
 						Arrays.asList(new String[] { //
 						Stops.ALL_STOPS.get("102854"), // Queensway Exchange Bay J
-								Stops.ALL_STOPS.get("140151"), "308", // Rutland Exchange Bay E
+								Stops.ALL_STOPS.get("140151"), "293", // Rutland Exchange Bay E
 								Stops.ALL_STOPS.get("103292"), // != Franklyn at McCurdy
 								Stops.ALL_STOPS.get("103283"), // <> McCurdy at Mayfair
 								Stops.ALL_STOPS.get("103327"), // <> Fitzpatrick at Findlay => CONTINUE
@@ -279,7 +279,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 								Stops.ALL_STOPS.get("103283"), // <> McCurdy at Mayfair
 								Stops.ALL_STOPS.get("103327"), // <> Fitzpatrick at Findlay
 								Stops.ALL_STOPS.get("103343"), // != Fitzpatrick at Chichester
-								Stops.ALL_STOPS.get("140149"), "322", // Rutland Exchange Bay C
+								Stops.ALL_STOPS.get("140149"), "307", // Rutland Exchange Bay C
 								Stops.ALL_STOPS.get("103070"), // Orchard Park Exchange Bay B
 								Stops.ALL_STOPS.get("102854"), // Queensway Exchange Bay J
 						})) //
@@ -297,7 +297,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 						Arrays.asList(new String[] { //
 						Stops.ALL_STOPS.get("103858"), // Country Club 1740 block
 								Stops.ALL_STOPS.get("103851"), // ++ Quail Ridge at Country Club
-								Stops.ALL_STOPS.get("140103"), // UBCO Exchange Bay D
+								Stops.ALL_STOPS.get("140104"), // UBCO Exchange Bay D
 						})) //
 				.compileBothTripSort());
 		map2.put(15L, new RouteTripSpec(15L, //
@@ -407,11 +407,11 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 						})) //
 				.compileBothTripSort());
 		map2.put(23L, new RouteTripSpec(23L, //
-				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, UBCO, //
-				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, LK_COUNTRY) //
-				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
+				StrategicMappingCommons.SOUTH, MTrip.HEADSIGN_TYPE_STRING, UBCO, //
+				StrategicMappingCommons.NORTH, MTrip.HEADSIGN_TYPE_STRING, LK_COUNTRY) //
+				.addTripSort(StrategicMappingCommons.SOUTH, //
 						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("103685"), // Oceola at Pretty #LakeCountry
+						Stops.ALL_STOPS.get("103660"), // Berry at Bottom Wood Lake
 								Stops.ALL_STOPS.get("103652"), // ==
 								Stops.ALL_STOPS.get("103609"), // !=
 								Stops.ALL_STOPS.get("103656"), // !=
@@ -419,10 +419,10 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 								Stops.ALL_STOPS.get("140106"), // !=
 								Stops.ALL_STOPS.get("104915"), // ==
 								Stops.ALL_STOPS.get("103847"), // ==
-								Stops.ALL_STOPS.get("140098"), // != Alumni Ave at Transit Way =>
+								Stops.ALL_STOPS.get("140098"), // != UBCO Exchange =>
 								Stops.ALL_STOPS.get("140103"), // != UBCO Exchange Bay D
 						})) //
-				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_1, //
+				.addTripSort(StrategicMappingCommons.NORTH, //
 						Arrays.asList(new String[] { //
 						Stops.ALL_STOPS.get("140103"), // UBCO Exchange Bay D
 								Stops.ALL_STOPS.get("103846"), // !==
@@ -434,6 +434,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 								Stops.ALL_STOPS.get("103650"), // ==
 								Stops.ALL_STOPS.get("103472"), // Main at Grant Rd
 								Stops.ALL_STOPS.get("103685"), // Oceola at Pretty #LakeCountry
+								Stops.ALL_STOPS.get("103660"), // Berry at Bottom Wood Lake
 						})) //
 				.compileBothTripSort());
 		map2.put(28L, new RouteTripSpec(28L, //
@@ -598,15 +599,20 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 			}
 		} else if (mRoute.getId() == 11L) {
 			if (gTrip.getDirectionId() == 0) { // Downtown - WEST
-				if ("Downtown".equalsIgnoreCase(gTrip.getTripHeadsign()) //
-						|| "To Orchard Park".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+				if (Arrays.asList( //
+						"Downtown", //
+						"To Orchard Park", //
+						"Rutland to Orchard Park" //
+				).contains(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.WEST);
 					return;
 				}
 			} else if (gTrip.getDirectionId() == 1) { // Rutland - EAST
-				if ("Rutland To 14 Black Mtn".equalsIgnoreCase(gTrip.getTripHeadsign()) //
-						|| "To Orchard Park".equalsIgnoreCase(gTrip.getTripHeadsign()) //
-						|| "Rutland".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+				if (Arrays.asList( //
+						"Rutland To 14 Black Mtn", //
+						"To Orchard Park", //
+						"Rutland" //
+				).contains(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.EAST);
 					return;
 				}
