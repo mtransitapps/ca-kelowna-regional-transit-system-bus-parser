@@ -352,15 +352,15 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 						})) //
 				.compileBothTripSort());
 		map2.put(19L, new RouteTripSpec(19L, //
-				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Glenmore", //
-				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, ORCHARD_PK) //
-				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
+				StrategicMappingCommons.NORTH, MTrip.HEADSIGN_TYPE_STRING, "Glenmore", //
+				StrategicMappingCommons.SOUTH, MTrip.HEADSIGN_TYPE_STRING, ORCHARD_PK) //
+				.addTripSort(StrategicMappingCommons.NORTH, //
 						Arrays.asList(new String[] { //
 						Stops.ALL_STOPS.get("103079"), // Orchard Park Exchange Bay G
 								Stops.ALL_STOPS.get("103041"), // ++
 								Stops.ALL_STOPS.get("140133"), // Glenmore at Union
 						})) //
-				.addTripSort(StrategicMappingCommons.CLOCKWISE_1, //
+				.addTripSort(StrategicMappingCommons.SOUTH, //
 						Arrays.asList(new String[] { //
 						Stops.ALL_STOPS.get("140133"), // Glenmore at Union
 								Stops.ALL_STOPS.get("103013"), // ++
