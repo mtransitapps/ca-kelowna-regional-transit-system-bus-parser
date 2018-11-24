@@ -220,11 +220,11 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 						Arrays.asList(new String[] { //
 						Stops.ALL_STOPS.get("102932"), // Cambridge at Ellis (EB) <= CONTINUE
 								Stops.ALL_STOPS.get("102895"), // ++ Richter at Gaston (SB)
-								Stops.ALL_STOPS.get("102859"), // Queensway Exchange Bay E
+								Stops.ALL_STOPS.get("102859"), Stops2.ALL_STOPS2.get("102859"), // Queensway Exchange Bay E
 						})) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_1, //
 						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("102859"), // Queensway Exchange Bay E
+						Stops.ALL_STOPS.get("102859"), Stops2.ALL_STOPS2.get("102859"), // Queensway Exchange Bay E
 								Stops.ALL_STOPS.get("102888"), // ++ Ellis at Industrial (NB)
 								Stops.ALL_STOPS.get("102932"), // Cambridge at Ellis (EB) => CONTINUE
 						})) //
@@ -267,7 +267,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				.addTripSort(StrategicMappingCommons.EAST, //
 						Arrays.asList(new String[] { //
 						Stops.ALL_STOPS.get("102854"), // Queensway Exchange Bay J
-								Stops.ALL_STOPS.get("140151"), "293", // Rutland Exchange Bay E
+								Stops.ALL_STOPS.get("140151"), Stops2.ALL_STOPS2.get("140151"), // Rutland Exchange Bay E
 								Stops.ALL_STOPS.get("103292"), // != Franklyn at McCurdy
 								Stops.ALL_STOPS.get("103283"), // <> McCurdy at Mayfair
 								Stops.ALL_STOPS.get("103327"), // <> Fitzpatrick at Findlay => CONTINUE
@@ -279,7 +279,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 								Stops.ALL_STOPS.get("103283"), // <> McCurdy at Mayfair
 								Stops.ALL_STOPS.get("103327"), // <> Fitzpatrick at Findlay
 								Stops.ALL_STOPS.get("103343"), // != Fitzpatrick at Chichester
-								Stops.ALL_STOPS.get("140149"), "307", // Rutland Exchange Bay C
+								Stops.ALL_STOPS.get("140149"), Stops2.ALL_STOPS2.get("140149"), // Rutland Exchange Bay C
 								Stops.ALL_STOPS.get("103070"), // Orchard Park Exchange Bay B
 								Stops.ALL_STOPS.get("102854"), // Queensway Exchange Bay J
 						})) //
