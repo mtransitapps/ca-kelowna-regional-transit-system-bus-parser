@@ -540,9 +540,12 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			} else if (gTrip.getDirectionId() == 1) { // Mission Rec Exch - SOUTH
-				if ("Lakeshore - Mission Rec Exch".equalsIgnoreCase(gTrip.getTripHeadsign()) //
-						|| "Lakeshore - To OK College".equalsIgnoreCase(gTrip.getTripHeadsign()) //
-						|| "Lakeshore - To South Pandosy".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+				if (Arrays.asList( //
+						"Lakeshore to OK College", //
+						"Lakeshore - To OK College", //
+						"Lakeshore - To South Pandosy", //
+						"Lakeshore - Mission Rec Exch" //
+				).contains(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.SOUTH);
 					return;
 				}
@@ -602,6 +605,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 			if (gTrip.getDirectionId() == 0) { // Downtown - WEST
 				if (Arrays.asList( //
 						"Downtown", //
+						"to Orchard Park", //
 						"To Orchard Park", //
 						"Rutland to Orchard Park" //
 				).contains(gTrip.getTripHeadsign())) {
@@ -634,7 +638,10 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 			}
 		} else if (mRoute.getId() == 14L) {
 			if (gTrip.getDirectionId() == 0) { // Rutland Exch - NORTH
-				if ("Black Mountain - To Rutland Exch".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+				if (Arrays.asList( //
+						"Black Mountain - To Rutland", //
+						"Black Mountain - To Rutland Exch" //
+				).contains(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.NORTH);
 					return;
 				}
