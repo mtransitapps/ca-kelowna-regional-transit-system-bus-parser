@@ -425,13 +425,15 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				.addTripSort(StrategicMappingCommons.NORTH, //
 						Arrays.asList(new String[] { //
 						Stops.ALL_STOPS.get("140103"), // == UBCO Exchange Bay D
-								Stops.ALL_STOPS.get("103846"), // !== Innovation at Fleet
+								Stops.ALL_STOPS.get("140159"), // !== Innovation at University
+								Stops.ALL_STOPS.get("103846"), // != Innovation at Fleet
 								Stops.ALL_STOPS.get("104916"), // !=
 								Stops.ALL_STOPS.get("103680"), // !=
 								Stops.ALL_STOPS.get("103610"), // !== 6240 Blk Airport Way
 								Stops.ALL_STOPS.get("140105"), // !== Edwards Rd at Hwy 97
 								Stops.ALL_STOPS.get("103480"), // !=
 								Stops.ALL_STOPS.get("103620"), // !== Old Vernon at Spencer
+								Stops.ALL_STOPS.get("103611"), // == Hwy 97 at Old Vernon
 								Stops.ALL_STOPS.get("103650"), // == Hwy 97 at Parkinson
 								Stops.ALL_STOPS.get("103472"), // Main at Grant Rd
 								Stops.ALL_STOPS.get("103685"), // Oceola at Pretty #LakeCountry
