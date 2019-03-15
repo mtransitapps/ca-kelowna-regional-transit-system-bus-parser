@@ -196,8 +196,6 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 
 	private static final String BLACK_MOUNTAIN = "Black Mtn";
 	private static final String SOUTH_PANDOSY = "South Pandosy";
-	private static final String S_PANDOSY = "S.Pandosy";
-	private static final String S_PANDOSY_EXCH = S_PANDOSY + " " + EXCH;
 	private static final String MISSION_REC_EXCH = "Mission Rec " + EXCH;
 	private static final String UBCO = "UBCO";
 	private static final String UBCO_EXCH = UBCO + " " + EXCH;
@@ -628,7 +626,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 			if (gTrip.getDirectionId() == 0) { // S.Pandosy Exch - WEST
 				if ("McCulloch - To Orchard Park".equalsIgnoreCase(gTrip.getTripHeadsign()) //
 						|| "McCulloch - To South Pandosy".equalsIgnoreCase(gTrip.getTripHeadsign()) //
-						|| "McCulloch to S.Pandosy Exch".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+						|| "McCulloch to OK College".equalsIgnoreCase(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.WEST);
 					return;
 				}
@@ -770,13 +768,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 		} else if (mTrip.getRouteId() == 12L) {
 			if (Arrays.asList( //
 					ORCHARD_PK, //
-					S_PANDOSY_EXCH //
-					).containsAll(headsignsValues)) {
-				mTrip.setHeadsignString(S_PANDOSY_EXCH, mTrip.getHeadsignId());
-				return true;
-			}
-			if (Arrays.asList( //
-					ORCHARD_PK, //
+					OK_COLLEGE, //
 					SOUTH_PANDOSY //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(SOUTH_PANDOSY, mTrip.getHeadsignId());
