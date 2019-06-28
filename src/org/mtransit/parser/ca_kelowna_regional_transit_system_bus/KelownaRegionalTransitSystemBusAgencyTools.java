@@ -272,7 +272,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 						})) //
 				.addTripSort(StrategicMappingCommons.WEST, //
 						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("103430"), // McCurdy Rd E at Craig <= CONTINUE
+						Stops.ALL_STOPS.get("103430"), Stops2.ALL_STOPS2.get("103430"), // McCurdy Rd E at Craig <= CONTINUE
 								Stops.ALL_STOPS.get("103396"), // != McCurdy Rd at Keyes
 								Stops.ALL_STOPS.get("103283"), // <> McCurdy at Mayfair
 								Stops.ALL_STOPS.get("103327"), // <> Fitzpatrick at Findlay
@@ -433,7 +433,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 								Stops.ALL_STOPS.get("103620"), // !== Old Vernon at Spencer
 								Stops.ALL_STOPS.get("103611"), // == Hwy 97 at Old Vernon
 								Stops.ALL_STOPS.get("103650"), // == Hwy 97 at Parkinson
-								Stops.ALL_STOPS.get("103472"), // Main at Grant Rd
+								Stops.ALL_STOPS.get("103472"), Stops2.ALL_STOPS2.get("103472"), // Main at Grant Rd
 								Stops.ALL_STOPS.get("103685"), // Oceola at Pretty #LakeCountry
 								Stops.ALL_STOPS.get("103660"), // Berry at Bottom Wood Lake
 						})) //
@@ -477,11 +477,11 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 						Arrays.asList(new String[] { //
 						Stops.ALL_STOPS.get("140081"), // Shoreline at Stillwater (NB) <= CONTINUE ?
 								Stops.ALL_STOPS.get("140088"), // Oceola at Pretty (SB) #LakewoodMall
-								Stops.ALL_STOPS.get("103472"), // Main at Grant Rd (NB)
+								Stops.ALL_STOPS.get("103472"), Stops2.ALL_STOPS2.get("103472"), // Main at Grant Rd (NB)
 						})) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_1, //
 						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("103472"), // Main at Grant Rd (NB)
+						Stops.ALL_STOPS.get("103472"), Stops2.ALL_STOPS2.get("103472"), // Main at Grant Rd (NB)
 								Stops.ALL_STOPS.get("103685"), // Oceola at Pretty (NB) #LakewoodMall
 								Stops.ALL_STOPS.get("140081"), // Shoreline at Stillwater (NB) => CONTINUE ?
 						})) //
@@ -495,7 +495,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 						})) //
 				.addTripSort(StrategicMappingCommons.OUTBOUND, //
 						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("103054"), // KLO 1470 block (WB)
+						Stops.ALL_STOPS.get("103054"), Stops2.ALL_STOPS2.get("103054"), // KLO 1470 block (WB)
 								Stops.ALL_STOPS.get("102860"), // Queensway Exchange Bay D
 								Stops.ALL_STOPS.get("140009") // Boucherie Mountain Exchange Bay C
 						})) //
