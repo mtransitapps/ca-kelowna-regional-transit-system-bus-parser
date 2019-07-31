@@ -48,9 +48,17 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 	public void start(String[] args) {
 		System.out.printf("\nGenerating Kelowna Regional TS bus data...");
 		long start = System.currentTimeMillis();
+		boolean isNext = "next_".equalsIgnoreCase(args[2]);
+		if (isNext) {
+			setupNext();
+		}
 		this.serviceIds = extractUsefulServiceIds(args, this, true);
 		super.start(args);
 		System.out.printf("\nGenerating Kelowna Regional TS bus data... DONE in %s.\n", Utils.getPrettyDuration(System.currentTimeMillis() - start));
+	}
+
+	private void setupNext() {
+		ALL_ROUTE_TRIPS2.remove(28L);
 	}
 
 	@Override
@@ -497,7 +505,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 						Arrays.asList(new String[] { //
 						Stops.ALL_STOPS.get("103054"), Stops2.ALL_STOPS2.get("103054"), // KLO 1470 block (WB)
 								Stops.ALL_STOPS.get("102860"), // Queensway Exchange Bay D
-								Stops.ALL_STOPS.get("140009") // Boucherie Mountain Exchange Bay C
+								Stops.ALL_STOPS.get("140008"), Stops.ALL_STOPS.get("140009"), // Boucherie Mountain Exchange Bay
 						})) //
 				.compileBothTripSort());
 		ALL_ROUTE_TRIPS2 = map2;
@@ -697,6 +705,34 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				if ("East Boundary - Boucherie Mtn".equalsIgnoreCase(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.EAST);
 					return;
+				}
+			}
+		} else if (mRoute.getId() == 26L) {
+			if (isGoodEnoughAccepted()) {
+				if (gTrip.getDirectionId() == 0) { // ??? - EAST
+					if ("Old Okanagan - Boucherie Mtn".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+						mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.EAST);
+						return;
+					}
+				} else if (gTrip.getDirectionId() == 1) { // ???? - WEST
+					if ("East Boundary - To Westbank".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+						mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.WEST);
+						return;
+					}
+				}
+			}
+		} else if (mRoute.getId() == 28L) {
+			if (isGoodEnoughAccepted()) {
+				if (gTrip.getDirectionId() == 0) { // Boucherie Mtn? - EAST
+					if ("Shannon Lake - Boucherie Mtn".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+						mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.EAST);
+						return;
+					}
+				} else if (gTrip.getDirectionId() == 1) { // Westbank? - WEST
+					if ("Shannon Lake - Westbank".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+						mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.WEST);
+						return;
+					}
 				}
 			}
 		} else if (mRoute.getId() == 97L) {
