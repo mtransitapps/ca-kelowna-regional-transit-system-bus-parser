@@ -5,16 +5,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.mtransit.commons.StrategicMappingCommons;
+import org.mtransit.parser.CleanUtils;
 import org.mtransit.parser.DefaultAgencyTools;
 import org.mtransit.parser.Pair;
 import org.mtransit.parser.SplitUtils;
-import org.mtransit.parser.Utils;
 import org.mtransit.parser.SplitUtils.RouteTripSpec;
+import org.mtransit.parser.Utils;
 import org.mtransit.parser.gtfs.data.GCalendar;
 import org.mtransit.parser.gtfs.data.GCalendarDate;
 import org.mtransit.parser.gtfs.data.GRoute;
@@ -24,9 +24,8 @@ import org.mtransit.parser.gtfs.data.GTrip;
 import org.mtransit.parser.gtfs.data.GTripStop;
 import org.mtransit.parser.mt.data.MAgency;
 import org.mtransit.parser.mt.data.MRoute;
-import org.mtransit.parser.mt.data.MTripStop;
-import org.mtransit.parser.CleanUtils;
 import org.mtransit.parser.mt.data.MTrip;
+import org.mtransit.parser.mt.data.MTripStop;
 
 // https://www.bctransit.com/open-data
 // https://www.bctransit.com/data/gtfs/kelowna.zip
@@ -840,37 +839,15 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 
 	private static final Pattern STARTS_WITH_DASH = Pattern.compile("(^.* \\- )", Pattern.CASE_INSENSITIVE);
 
-	private static final Pattern TO = Pattern.compile("((^|\\W){1}(to)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
-	private static final Pattern VIA = Pattern.compile("((^|\\W){1}(via)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
-
-	private static final Pattern AND = Pattern.compile("( and )", Pattern.CASE_INSENSITIVE);
-	private static final String AND_REPLACEMENT = " & ";
-
-	private static final Pattern CLEAN_P1 = Pattern.compile("[\\s]*\\([\\s]*");
-	private static final String CLEAN_P1_REPLACEMENT = " (";
-	private static final Pattern CLEAN_P2 = Pattern.compile("[\\s]*\\)[\\s]*");
-	private static final String CLEAN_P2_REPLACEMENT = ") ";
-
 	private static final Pattern ENDS_WITH_EXPRESS = Pattern.compile("((\\W){1}(express)($){1})", Pattern.CASE_INSENSITIVE);
 
 	private static final Pattern SPECIAL = Pattern.compile("((^|\\W){1}(special)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
 
 	@Override
 	public String cleanTripHeadsign(String tripHeadsign) {
-		Matcher matcherTO = TO.matcher(tripHeadsign);
-		if (matcherTO.find()) {
-			String gTripHeadsignAfterTO = tripHeadsign.substring(matcherTO.end());
-			tripHeadsign = gTripHeadsignAfterTO;
-		}
-		Matcher matcherVIA = VIA.matcher(tripHeadsign);
-		if (matcherVIA.find()) {
-			String gTripHeadsignBeforeVIA = tripHeadsign.substring(0, matcherVIA.start());
-			tripHeadsign = gTripHeadsignBeforeVIA;
-		}
+		tripHeadsign = CleanUtils.keepToAndRevoveVia(tripHeadsign);
 		tripHeadsign = EXCHANGE.matcher(tripHeadsign).replaceAll(EXCHANGE_REPLACEMENT);
-		tripHeadsign = AND.matcher(tripHeadsign).replaceAll(AND_REPLACEMENT);
-		tripHeadsign = CLEAN_P1.matcher(tripHeadsign).replaceAll(CLEAN_P1_REPLACEMENT);
-		tripHeadsign = CLEAN_P2.matcher(tripHeadsign).replaceAll(CLEAN_P2_REPLACEMENT);
+		tripHeadsign = CleanUtils.CLEAN_AND.matcher(tripHeadsign).replaceAll(CleanUtils.CLEAN_AND_REPLACEMENT);
 		tripHeadsign = STARTS_WITH_NUMBER.matcher(tripHeadsign).replaceAll(StringUtils.EMPTY);
 		tripHeadsign = STARTS_WITH_DASH.matcher(tripHeadsign).replaceAll(StringUtils.EMPTY);
 		tripHeadsign = ENDS_WITH_EXPRESS.matcher(tripHeadsign).replaceAll(StringUtils.EMPTY);
