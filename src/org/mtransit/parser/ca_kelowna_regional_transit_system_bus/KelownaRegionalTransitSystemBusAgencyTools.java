@@ -60,7 +60,6 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 	private boolean isNext;
 
 	private void setupNext() {
-		ALL_ROUTE_TRIPS2.remove(28L);
 	}
 
 	@Override
@@ -203,7 +202,6 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 	private static final String SOUTH_PANDOSY = "South Pandosy";
 	private static final String MISSION_REC_EXCH = "Mission Rec " + EXCH;
 	private static final String UBCO = "UBCO";
-	private static final String UBCO_EXCH = UBCO + " " + EXCH;
 	private static final String RUTLAND = "Rutland";
 	private static final String QUEENSWAY_EXCH = "Queensway " + EXCH;
 	private static final String OK_COLLEGE = "OK College";
@@ -211,7 +209,6 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 	private static final String GLENROSA = "Glenrosa";
 	private static final String LK_COUNTRY = "Lk Country";
 	private static final String WESTBANK = "Westbank";
-	private static final String PEACHLAND = "Peachland";
 	private static final String DOWNTOWN = "Downtown";
 
 	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
@@ -247,22 +244,6 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 						Stops.ALL_STOPS.get("103079"), // Orchard Park Exchange Bay G
 								Stops.ALL_STOPS.get("103170"), // ++ Summit at Dilworth (WB)
 								Stops.ALL_STOPS.get("103041"), // Glenmore AT Summit (NB) => CONTINUE
-						})) //
-				.compileBothTripSort());
-		map2.put(6L, new RouteTripSpec(6L, //
-				StrategicMappingCommons.INBOUND, MTrip.HEADSIGN_TYPE_STRING, QUEENSWAY_EXCH, //
-				StrategicMappingCommons.OUTBOUND, MTrip.HEADSIGN_TYPE_STRING, UBCO_EXCH) //
-				.addTripSort(StrategicMappingCommons.INBOUND, //
-						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("140099"), // UBCO Exchange Bay A
-								Stops.ALL_STOPS.get("103005"), // ++
-								Stops.ALL_STOPS.get("102856"), // Queensway Exchange Bay H
-						})) //
-				.addTripSort(StrategicMappingCommons.OUTBOUND, //
-						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("102856"), // Queensway Exchange Bay H
-								Stops.ALL_STOPS.get("103010"), // ++
-								Stops.ALL_STOPS.get("140100"), // Transit Way at Alumni Ave
 						})) //
 				.compileBothTripSort());
 		map2.put(13L, new RouteTripSpec(13L, //
@@ -332,22 +313,6 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 								Stops.ALL_STOPS.get("103022"), // Mission Rec Exchange Bay B
 						})) //
 				.compileBothTripSort());
-		map2.put(19L, new RouteTripSpec(19L, //
-				StrategicMappingCommons.NORTH, MTrip.HEADSIGN_TYPE_STRING, "Glenmore", //
-				StrategicMappingCommons.SOUTH, MTrip.HEADSIGN_TYPE_STRING, ORCHARD_PK) //
-				.addTripSort(StrategicMappingCommons.NORTH, //
-						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("103079"), // Orchard Park Exchange Bay G
-								Stops.ALL_STOPS.get("103041"), // ++
-								Stops.ALL_STOPS.get("140133"), // Glenmore at Union
-						})) //
-				.addTripSort(StrategicMappingCommons.SOUTH, //
-						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("140133"), // Glenmore at Union
-								Stops.ALL_STOPS.get("103013"), // ++
-								Stops.ALL_STOPS.get("103079"), // Orchard Park Exchange Bay G
-						})) //
-				.compileBothTripSort());
 		map2.put(21L, new RouteTripSpec(21L, //
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, GLENROSA, //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, WESTBANK) //
@@ -362,79 +327,6 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 						Stops.ALL_STOPS.get("103641"), // Canary @ Blue Jay
 								Stops.ALL_STOPS.get("103643"), // Glenrosa at Dunfield
 								Stops.ALL_STOPS.get("140006"), // Westbank Exchange Bay C
-						})) //
-				.compileBothTripSort());
-		map2.put(22L, new RouteTripSpec(22L, //
-				StrategicMappingCommons.SOUTH, MTrip.HEADSIGN_TYPE_STRING, PEACHLAND, //
-				StrategicMappingCommons.NORTH, MTrip.HEADSIGN_TYPE_STRING, WESTBANK) //
-				.addTripSort(StrategicMappingCommons.SOUTH, //
-						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("140006"), // != Westbank Exchange Bay C
-								Stops.ALL_STOPS.get("103643"), // != Glenrosa at Dunfield
-								Stops.ALL_STOPS.get("103682"), // !=
-								Stops.ALL_STOPS.get("103686"), // <>
-								Stops.ALL_STOPS.get("103689"), // !=
-								Stops.ALL_STOPS.get("103701"), // !=
-								Stops.ALL_STOPS.get("103702"), // ==
-								Stops.ALL_STOPS.get("103844"), // Princeton at Pierce #Peachland
-						})) //
-				.addTripSort(StrategicMappingCommons.NORTH, //
-						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("103844"), // Princeton at Pierce #Peachland
-								Stops.ALL_STOPS.get("103690"), // == !=
-								Stops.ALL_STOPS.get("103686"), // != <>
-								Stops.ALL_STOPS.get("103675"), // == !=
-								Stops.ALL_STOPS.get("140006"), // Westbank Exchange Bay C
-						})) //
-				.compileBothTripSort());
-		map2.put(23L, new RouteTripSpec(23L, //
-				StrategicMappingCommons.SOUTH, MTrip.HEADSIGN_TYPE_STRING, UBCO, //
-				StrategicMappingCommons.NORTH, MTrip.HEADSIGN_TYPE_STRING, LK_COUNTRY) //
-				.addTripSort(StrategicMappingCommons.SOUTH, //
-						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("103660"), // Berry at Bottom Wood Lake
-								Stops.ALL_STOPS.get("103652"), // ==
-								Stops.ALL_STOPS.get("103609"), // !=
-								Stops.ALL_STOPS.get("103656"), // !=
-								Stops.ALL_STOPS.get("103619"), // !=
-								Stops.ALL_STOPS.get("140106"), // !=
-								Stops.ALL_STOPS.get("104915"), // ==
-								Stops.ALL_STOPS.get("103847"), // ==
-								Stops.ALL_STOPS.get("140098"), // != UBCO Exchange =>
-								Stops.ALL_STOPS.get("140103"), // != UBCO Exchange Bay D
-						})) //
-				.addTripSort(StrategicMappingCommons.NORTH, //
-						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("140103"), // == UBCO Exchange Bay D
-								Stops.ALL_STOPS.get("140159"), // !== Innovation at University
-								Stops.ALL_STOPS.get("103846"), // != Innovation at Fleet
-								Stops.ALL_STOPS.get("104916"), // !=
-								Stops.ALL_STOPS.get("103680"), // !=
-								Stops.ALL_STOPS.get("103610"), // !== 6240 Blk Airport Way
-								Stops.ALL_STOPS.get("140105"), // !== Edwards Rd at Hwy 97
-								Stops.ALL_STOPS.get("103480"), // !=
-								Stops.ALL_STOPS.get("103620"), // !== Old Vernon at Spencer
-								Stops.ALL_STOPS.get("103611"), // == Hwy 97 at Old Vernon
-								Stops.ALL_STOPS.get("103650"), // == Hwy 97 at Parkinson
-								Stops.ALL_STOPS.get("103472"), Stops2.ALL_STOPS2.get("103472"), // Main at Grant Rd
-								Stops.ALL_STOPS.get("103685"), // Oceola at Pretty #LakeCountry
-								Stops.ALL_STOPS.get("103660"), // Berry at Bottom Wood Lake
-						})) //
-				.compileBothTripSort());
-		map2.put(28L, new RouteTripSpec(28L, //
-				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Smith Crk", //
-				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, WESTBANK) //
-				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
-						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("140005"), // Westbank Exchange Bay B
-								Stops.ALL_STOPS.get("103541"), // Old Okanagan 3330 block (NB)
-								Stops.ALL_STOPS.get("140063"), // Copper Ridge at Smith (WB) => CONTINUE
-						})) //
-				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_1, //
-						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("140063"), // Copper Ridge at Smith (WB) <= CONTINUE
-								Stops.ALL_STOPS.get("103573"), // Elliott at Reece (SB)
-								Stops.ALL_STOPS.get("140005"), // Westbank Exchange Bay B
 						})) //
 				.compileBothTripSort());
 		map2.put(29L, new RouteTripSpec(29L, //
@@ -467,20 +359,6 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 						Stops.ALL_STOPS.get("103472"), Stops2.ALL_STOPS2.get("103472"), // Main at Grant Rd (NB)
 								Stops.ALL_STOPS.get("103685"), // Oceola at Pretty (NB) #LakewoodMall
 								Stops.ALL_STOPS.get("140081"), // Shoreline at Stillwater (NB) => CONTINUE ?
-						})) //
-				.compileBothTripSort());
-		map2.put(88L, new RouteTripSpec(88L, //
-				StrategicMappingCommons.INBOUND, MTrip.HEADSIGN_TYPE_STRING, StringUtils.EMPTY, //
-				StrategicMappingCommons.OUTBOUND, MTrip.HEADSIGN_TYPE_STRING, "Boucherie Mtn") //
-				.addTripSort(StrategicMappingCommons.INBOUND, //
-						Arrays.asList(new String[] { //
-						/* no stops */
-						})) //
-				.addTripSort(StrategicMappingCommons.OUTBOUND, //
-						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("103054"), Stops2.ALL_STOPS2.get("103054"), // KLO 1470 block (WB)
-								Stops.ALL_STOPS.get("102860"), // Queensway Exchange Bay D
-								Stops.ALL_STOPS.get("140008"), Stops.ALL_STOPS.get("140009"), // Boucherie Mountain Exchange Bay
 						})) //
 				.compileBothTripSort());
 		ALL_ROUTE_TRIPS2 = map2;
@@ -554,6 +432,18 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 			} else if (gTrip.getDirectionId() == 1) { // Mission Rec Exch - SOUTH
 				if ("Gordon - Mission Rec Exch".equalsIgnoreCase(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.SOUTH);
+					return;
+				}
+			}
+		} else if (mRoute.getId() == 6L) {
+			if (gTrip.getDirectionId() == 0) { // Downtown - INBOUND // Queensway Exch - INBOUND
+				if ("Downtown".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.INBOUND);
+					return;
+				}
+			} else if (gTrip.getDirectionId() == 1) { // UBCO Exch - OUTBOUND
+				if ("UBCO".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.OUTBOUND);
 					return;
 				}
 			}
@@ -662,6 +552,18 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
+		} else if (mRoute.getId() == 19L) {
+			if (gTrip.getDirectionId() == 0) { // Glenmore - NORTH
+				if ("Glenmore".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.NORTH);
+					return;
+				}
+			} else if (gTrip.getDirectionId() == 1) { // Orchard Pk - SOUTH
+				if ("Orchard Park".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.SOUTH);
+					return;
+				}
+			}
 		} else if (mRoute.getId() == 20L) {
 			if (gTrip.getDirectionId() == 0) { // Westbank - WEST
 				if ("Lakeview - To Westbank".equalsIgnoreCase(gTrip.getTripHeadsign())) {
@@ -674,14 +576,45 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
+		} else if (mRoute.getId() == 22L) {
+			if (gTrip.getDirectionId() == 0) { // Westbank - NORTH
+				if ("Peachland - To Westbank".equalsIgnoreCase(gTrip.getTripHeadsign()) //
+						|| "Peachland Exp - To Westbank".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.NORTH);
+					return;
+				}
+			} else if (gTrip.getDirectionId() == 1) { // Peachland - SOUTH
+				if ("Peachland".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.SOUTH);
+					return;
+				}
+			}
+		} else if (mRoute.getId() == 23L) {
+			if (gTrip.getDirectionId() == 0) { // Lake Country - NORTH
+				if ("Lake Country".equalsIgnoreCase(gTrip.getTripHeadsign()) //
+						|| "Lake Country Via Airport".equalsIgnoreCase(gTrip.getTripHeadsign()) //
+						|| "Lake Country - Old Vernon Rd".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.NORTH);
+					return;
+				}
+			} else if (gTrip.getDirectionId() == 1) { // UBCO Exch - SOUTH
+				if ("UBCO".equalsIgnoreCase(gTrip.getTripHeadsign()) //
+						|| "UBCO Via Airport".equalsIgnoreCase(gTrip.getTripHeadsign()) //
+						|| "UBCO - Old Vernon Rd".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.SOUTH);
+					return;
+				}
+			}
 		} else if (mRoute.getId() == 24L) {
 			if (gTrip.getDirectionId() == 0) { // Westbank - WEST
-				if ("Shannon Lake - To Westbank".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+				if ("Shannon Lake - To Westbank".equalsIgnoreCase(gTrip.getTripHeadsign()) //
+						|| "Shannon Ridge- To Westbank".equalsIgnoreCase(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.WEST);
 					return;
 				}
 			} else if (gTrip.getDirectionId() == 1) { // Boucherie Mtn - EAST
-				if ("Shannon Lake - Boucherie Mtn".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+				if ("Shannon Lake - Boucherie Mtn".equalsIgnoreCase(gTrip.getTripHeadsign()) //
+						|| "Shannon Ridge - Boucherie Mtn".equalsIgnoreCase(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.EAST);
 					return;
 				}
@@ -699,31 +632,39 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				}
 			}
 		} else if (mRoute.getId() == 26L) {
-			if (this.isNext && isGoodEnoughAccepted()) {
-				if (false) {
-					// TODO check once in NextRide
-				}
-				if (gTrip.getDirectionId() == 0) { // ??? - EAST
-					if ("Old Okanagan - Boucherie Mtn".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-						mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.EAST);
-						return;
-					}
-				} else if (gTrip.getDirectionId() == 1) { // ???? - WEST
-					if ("East Boundary - To Westbank".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-						mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.WEST);
-						return;
-					}
-				}
-			}
-		} else if (mRoute.getId() == 28L) { // COUNTERCLOCKWISE
-			if (gTrip.getDirectionId() == 0) { // Boucherie Mtn - EAST
-				if ("Shannon Lake - Boucherie Mtn".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.EAST);
+			if (gTrip.getDirectionId() == 0) { // Boucherie Mtn - NORTH
+				if ("Old Okanagan - Boucherie Mtn".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.NORTH);
 					return;
 				}
-			} else if (gTrip.getDirectionId() == 1) { // Westbank - WEST
+			} else if (gTrip.getDirectionId() == 1) { // Westbank - SOUTH
+				if ("East Boundary - To Westbank".equalsIgnoreCase(gTrip.getTripHeadsign()) //
+						|| "Old Okanagan - Westbank Ex.".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.SOUTH);
+					return;
+				}
+			}
+		} else if (mRoute.getId() == 28L) { //
+			if (gTrip.getDirectionId() == 0) { // Boucherie Mtn - NORTH
+				if ("Shannon Lake - Boucherie Mtn".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.NORTH);
+					return;
+				}
+			} else if (gTrip.getDirectionId() == 1) { // Westbank - SOUTH
 				if ("Shannon Lake - Westbank".equalsIgnoreCase(gTrip.getTripHeadsign())) {
-					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.WEST);
+					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.SOUTH);
+					return;
+				}
+			}
+		} else if (mRoute.getId() == 88L) { //
+			if (gTrip.getDirectionId() == 1) { // Boucherie Mtn - OUTBOUND // Special - OUTBOUND
+				if ("Special".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+					if (isGoodEnoughAccepted() //
+							&& "Special".equalsIgnoreCase(gTrip.getTripHeadsign())) {
+						mTrip.setHeadsignString("Boucherie Mtn", StrategicMappingCommons.OUTBOUND);
+						return;
+					}
+					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.OUTBOUND);
 					return;
 				}
 			}
@@ -811,6 +752,21 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				mTrip.setHeadsignString(SOUTH_PANDOSY, mTrip.getHeadsignId());
 				return true;
 			}
+		} else if (mTrip.getRouteId() == 23L) {
+			if (Arrays.asList( //
+					"Old Vernon Rd", // <>
+					LK_COUNTRY //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(LK_COUNTRY, mTrip.getHeadsignId());
+				return true;
+			}
+			if (Arrays.asList( //
+					"Old Vernon Rd", // <>
+					UBCO //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(UBCO, mTrip.getHeadsignId());
+				return true;
+			}
 		} else if (mTrip.getRouteId() == 97L) {
 			if (Arrays.asList( //
 					DOWNTOWN, // <>
@@ -845,7 +801,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 
 	@Override
 	public String cleanTripHeadsign(String tripHeadsign) {
-		tripHeadsign = CleanUtils.keepToAndRevoveVia(tripHeadsign);
+		tripHeadsign = CleanUtils.keepToAndRemoveVia(tripHeadsign);
 		tripHeadsign = EXCHANGE.matcher(tripHeadsign).replaceAll(EXCHANGE_REPLACEMENT);
 		tripHeadsign = CleanUtils.CLEAN_AND.matcher(tripHeadsign).replaceAll(CleanUtils.CLEAN_AND_REPLACEMENT);
 		tripHeadsign = STARTS_WITH_NUMBER.matcher(tripHeadsign).replaceAll(StringUtils.EMPTY);
