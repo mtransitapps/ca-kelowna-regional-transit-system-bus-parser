@@ -1,16 +1,10 @@
 package org.mtransit.parser.ca_kelowna_regional_transit_system_bus;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.regex.Pattern;
-
 import org.apache.commons.lang3.StringUtils;
 import org.mtransit.commons.StrategicMappingCommons;
 import org.mtransit.parser.CleanUtils;
 import org.mtransit.parser.DefaultAgencyTools;
+import org.mtransit.parser.MTLog;
 import org.mtransit.parser.Pair;
 import org.mtransit.parser.SplitUtils;
 import org.mtransit.parser.SplitUtils.RouteTripSpec;
@@ -26,6 +20,13 @@ import org.mtransit.parser.mt.data.MAgency;
 import org.mtransit.parser.mt.data.MRoute;
 import org.mtransit.parser.mt.data.MTrip;
 import org.mtransit.parser.mt.data.MTripStop;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.regex.Pattern;
 
 // https://www.bctransit.com/open-data
 // https://www.bctransit.com/data/gtfs/kelowna.zip
@@ -44,9 +45,12 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 
 	private HashSet<String> serviceIds;
 
+	@SuppressWarnings("FieldCanBeLocal")
+	private boolean isNext;
+
 	@Override
 	public void start(String[] args) {
-		System.out.printf("\nGenerating Kelowna Regional TS bus data...");
+		MTLog.log("Generating Kelowna Regional TS bus data...");
 		long start = System.currentTimeMillis();
 		this.isNext = "next_".equalsIgnoreCase(args[2]);
 		if (isNext) {
@@ -54,10 +58,8 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 		}
 		this.serviceIds = extractUsefulServiceIds(args, this, true);
 		super.start(args);
-		System.out.printf("\nGenerating Kelowna Regional TS bus data... DONE in %s.\n", Utils.getPrettyDuration(System.currentTimeMillis() - start));
+		MTLog.log("Generating Kelowna Regional TS bus data... DONE in %s.", Utils.getPrettyDuration(System.currentTimeMillis() - start));
 	}
-
-	private boolean isNext;
 
 	private void setupNext() {
 	}
@@ -71,7 +73,9 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 
 	@Override
 	public boolean excludeCalendar(GCalendar gCalendar) {
-		if (INCLUDE_ONLY_SERVICE_ID_CONTAINS != null && !gCalendar.getServiceId().contains(INCLUDE_ONLY_SERVICE_ID_CONTAINS)) {
+		//noinspection ConstantConditions
+		if (INCLUDE_ONLY_SERVICE_ID_CONTAINS != null
+				&& !gCalendar.getServiceId().contains(INCLUDE_ONLY_SERVICE_ID_CONTAINS)) {
 			return true;
 		}
 		if (this.serviceIds != null) {
@@ -82,7 +86,9 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 
 	@Override
 	public boolean excludeCalendarDate(GCalendarDate gCalendarDates) {
-		if (INCLUDE_ONLY_SERVICE_ID_CONTAINS != null && !gCalendarDates.getServiceId().contains(INCLUDE_ONLY_SERVICE_ID_CONTAINS)) {
+		//noinspection ConstantConditions
+		if (INCLUDE_ONLY_SERVICE_ID_CONTAINS != null
+				&& !gCalendarDates.getServiceId().contains(INCLUDE_ONLY_SERVICE_ID_CONTAINS)) {
 			return true;
 		}
 		if (this.serviceIds != null) {
@@ -98,7 +104,9 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 
 	@Override
 	public boolean excludeTrip(GTrip gTrip) {
-		if (INCLUDE_ONLY_SERVICE_ID_CONTAINS != null && !gTrip.getServiceId().contains(INCLUDE_ONLY_SERVICE_ID_CONTAINS)) {
+		//noinspection ConstantConditions
+		if (INCLUDE_ONLY_SERVICE_ID_CONTAINS != null
+				&& !gTrip.getServiceId().contains(INCLUDE_ONLY_SERVICE_ID_CONTAINS)) {
 			return true;
 		}
 		if (this.serviceIds != null) {
@@ -124,8 +132,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 			routeLongName = gRoute.getRouteDesc();
 		}
 		if (StringUtils.isEmpty(routeLongName)) {
-			System.out.printf("\nUnexptected route long name for %s!\n", gRoute);
-			System.exit(-1);
+			MTLog.logFatal("Unexpected route long name for %s!", gRoute);
 			return null;
 		}
 		routeLongName = CleanUtils.cleanSlashes(routeLongName);
@@ -149,6 +156,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 	private static final String COLOR_7B9597 = "7B9597";
 	private static final String COLOR_F17C15 = "F17C15";
 
+	@SuppressWarnings("DuplicateBranchesInSwitch")
 	@Override
 	public String getRouteColor(GRoute gRoute) {
 		if (StringUtils.isEmpty(gRoute.getRouteColor())) {
@@ -188,8 +196,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 			case 97: return COLOR_F17C15;
 			// @formatter:on
 			default:
-				System.out.println("Unexpected route color " + gRoute);
-				System.exit(-1);
+				MTLog.logFatal("Unexpected route color %s!", gRoute);
 				return null;
 			}
 		}
@@ -212,154 +219,155 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 	private static final String DOWNTOWN = "Downtown";
 
 	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
+
 	static {
-		HashMap<Long, RouteTripSpec> map2 = new HashMap<Long, RouteTripSpec>();
+		HashMap<Long, RouteTripSpec> map2 = new HashMap<>();
 		map2.put(2L, new RouteTripSpec(2L, //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, QUEENSWAY_EXCH, //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "Cambridge & Ellis") //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
-						Arrays.asList(new String[] { //
-						Stops.getALL_STOPS().get("102932"), // Cambridge at Ellis (EB) <= CONTINUE
+						Arrays.asList(//
+								Stops.getALL_STOPS().get("102932"), // Cambridge at Ellis (EB) <= CONTINUE
 								Stops.getALL_STOPS().get("102895"), // ++ Richter at Gaston (SB)
-								Stops.getALL_STOPS().get("102859"), // Queensway Exchange Bay E
-						})) //
+								Stops.getALL_STOPS().get("102859") // Queensway Exchange Bay E
+						)) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_1, //
-						Arrays.asList(new String[] { //
-						Stops.getALL_STOPS().get("102859"), // Queensway Exchange Bay E
+						Arrays.asList(//
+								Stops.getALL_STOPS().get("102859"), // Queensway Exchange Bay E
 								Stops.getALL_STOPS().get("102888"), // ++ Ellis at Industrial (NB)
-								Stops.getALL_STOPS().get("102932"), // Cambridge at Ellis (EB) => CONTINUE
-						})) //
+								Stops.getALL_STOPS().get("102932") // Cambridge at Ellis (EB) => CONTINUE
+						)) //
 				.compileBothTripSort());
 		map2.put(3L, new RouteTripSpec(3L, //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, ORCHARD_PK, //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "Glenmore @ Summit") //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
-						Arrays.asList(new String[] { //
-						Stops.getALL_STOPS().get("103041"), // Glenmore AT Summit (NB) <= CONTINUE
+						Arrays.asList(//
+								Stops.getALL_STOPS().get("103041"), // Glenmore AT Summit (NB) <= CONTINUE
 								Stops.getALL_STOPS().get("103168"), // ++ Summit at Dilworth (EB)
-								Stops.getALL_STOPS().get("103079"), // Orchard Park Exchange Bay G
-						})) //
+								Stops.getALL_STOPS().get("103079") // Orchard Park Exchange Bay G
+						)) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_1, //
-						Arrays.asList(new String[] { //
-						Stops.getALL_STOPS().get("103079"), // Orchard Park Exchange Bay G
+						Arrays.asList(//
+								Stops.getALL_STOPS().get("103079"), // Orchard Park Exchange Bay G
 								Stops.getALL_STOPS().get("103170"), // ++ Summit at Dilworth (WB)
-								Stops.getALL_STOPS().get("103041"), // Glenmore AT Summit (NB) => CONTINUE
-						})) //
+								Stops.getALL_STOPS().get("103041") // Glenmore AT Summit (NB) => CONTINUE
+						)) //
 				.compileBothTripSort());
 		map2.put(13L, new RouteTripSpec(13L, //
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Country Club", //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, UBCO) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
-						Arrays.asList(new String[] { //
-						Stops.getALL_STOPS().get("140104"), // UBCO Exchange Bay E
+						Arrays.asList(//
+								Stops.getALL_STOPS().get("140104"), // UBCO Exchange Bay E
 								Stops.getALL_STOPS().get("104916"), // ++
-								Stops.getALL_STOPS().get("103858"), // Country Club 1740 block
-						})) //
+								Stops.getALL_STOPS().get("103858") // Country Club 1740 block
+						)) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_1, //
-						Arrays.asList(new String[] { //
-						Stops.getALL_STOPS().get("103858"), // Country Club 1740 block
+						Arrays.asList(//
+								Stops.getALL_STOPS().get("103858"), // Country Club 1740 block
 								Stops.getALL_STOPS().get("103851"), // ++ Quail Ridge at Country Club
-								Stops.getALL_STOPS().get("140104"), // UBCO Exchange Bay D
-						})) //
+								Stops.getALL_STOPS().get("140104") // UBCO Exchange Bay D
+						)) //
 				.compileBothTripSort());
 		map2.put(15L, new RouteTripSpec(15L, //
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Crawford", //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, MISSION_REC_EXCH) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
-						Arrays.asList(new String[] { //
-						Stops.getALL_STOPS().get("103021"), // Mission Rec Exchange Bay A
-								Stops.getALL_STOPS().get("103316"), // Dehart at Gordon (EB)
-								Stops.getALL_STOPS().get("103401"), // Westridge at Crawford (SB) => CONTINUE
-						})) //
-				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_1, //
-						Arrays.asList(new String[] { //
-						Stops.getALL_STOPS().get("103401"), // Westridge at Crawford (SB) <= CONTINUE
-								Stops.getALL_STOPS().get("103423"), // Westridge at Blueridge (SB)
+						Arrays.asList(//
 								Stops.getALL_STOPS().get("103021"), // Mission Rec Exchange Bay A
-						})) //
+								Stops.getALL_STOPS().get("103316"), // Dehart at Gordon (EB)
+								Stops.getALL_STOPS().get("103401") // Westridge at Crawford (SB) => CONTINUE
+						)) //
+				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_1, //
+						Arrays.asList(//
+								Stops.getALL_STOPS().get("103401"), // Westridge at Crawford (SB) <= CONTINUE
+								Stops.getALL_STOPS().get("103423"), // Westridge at Blueridge (SB)
+								Stops.getALL_STOPS().get("103021") // Mission Rec Exchange Bay A
+						)) //
 				.compileBothTripSort());
 		map2.put(16L, new RouteTripSpec(16L, //
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Kettle Vly", //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, MISSION_REC_EXCH) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
-						Arrays.asList(new String[] { //
-						Stops.getALL_STOPS().get("103022"), // Mission Rec Exchange Bay B
+						Arrays.asList(//
+								Stops.getALL_STOPS().get("103022"), // Mission Rec Exchange Bay B
 								Stops.getALL_STOPS().get("103319"), // Lakeshore at Dehart (SB)
 								Stops.getALL_STOPS().get("103808"), // Chute Lake at South Crest (SB)
-								Stops.getALL_STOPS().get("103562"), // Quilchena at Providence (SB) #KettleVly => CONTINUE
-						})) //
+								Stops.getALL_STOPS().get("103562") // Quilchena at Providence (SB) #KettleVly => CONTINUE
+						)) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_1, //
-						Arrays.asList(new String[] { //
-						Stops.getALL_STOPS().get("103814"), // South Perimeter at Farron (EB) #KettleVly <= CONTINUE
+						Arrays.asList(//
+								Stops.getALL_STOPS().get("103814"), // South Perimeter at Farron (EB) #KettleVly <= CONTINUE
 								Stops.getALL_STOPS().get("103809"), // Chute Lake at South Crest (NB)
 								Stops.getALL_STOPS().get("103317"), // Lakeshore at Dehart (NB)
-								Stops.getALL_STOPS().get("103022"), // Mission Rec Exchange Bay B
-						})) //
+								Stops.getALL_STOPS().get("103022") // Mission Rec Exchange Bay B
+						)) //
 				.compileBothTripSort());
 		map2.put(17L, new RouteTripSpec(17L, //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Southridge", //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, MISSION_REC_EXCH) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
-						Arrays.asList(new String[] { //
-						Stops.getALL_STOPS().get("103022"), // Mission Rec Exchange Bay B
+						Arrays.asList(//
+								Stops.getALL_STOPS().get("103022"), // Mission Rec Exchange Bay B
 								Stops.getALL_STOPS().get("103325"), // Gordon at Dehart (SB)
-								Stops.getALL_STOPS().get("103191"), // South Ridge at Frost (NB) => CONTINUE
-						})) //
+								Stops.getALL_STOPS().get("103191") // South Ridge at Frost (NB) => CONTINUE
+						)) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_1, //
-						Arrays.asList(new String[] { //
-						Stops.getALL_STOPS().get("103191"), // South Ridge at Frost (NB) <= CONTINUE
+						Arrays.asList(//
+								Stops.getALL_STOPS().get("103191"), // South Ridge at Frost (NB) <= CONTINUE
 								Stops.getALL_STOPS().get("103820"), // Gordon at Raymer (NB)
 								Stops.getALL_STOPS().get("103818"), // Gordon at Tozer (NB)
-								Stops.getALL_STOPS().get("103022"), // Mission Rec Exchange Bay B
-						})) //
+								Stops.getALL_STOPS().get("103022") // Mission Rec Exchange Bay B
+						)) //
 				.compileBothTripSort());
 		map2.put(21L, new RouteTripSpec(21L, //
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, GLENROSA, //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, WESTBANK) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
-						Arrays.asList(new String[] { //
-						Stops.getALL_STOPS().get("140006"), // Westbank Exchange Bay C
-								Stops.getALL_STOPS().get("103624"), // McNair at Webber
-								Stops.getALL_STOPS().get("103641"), // Canary @ Blue Jay
-						})) //
-				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_1, //
-						Arrays.asList(new String[] { //
-						Stops.getALL_STOPS().get("103641"), // Canary @ Blue Jay
-								Stops.getALL_STOPS().get("103643"), // Glenrosa at Dunfield
+						Arrays.asList(//
 								Stops.getALL_STOPS().get("140006"), // Westbank Exchange Bay C
-						})) //
+								Stops.getALL_STOPS().get("103624"), // McNair at Webber
+								Stops.getALL_STOPS().get("103641") // Canary @ Blue Jay
+						)) //
+				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_1, //
+						Arrays.asList(//
+								Stops.getALL_STOPS().get("103641"), // Canary @ Blue Jay
+								Stops.getALL_STOPS().get("103643"), // Glenrosa at Dunfield
+								Stops.getALL_STOPS().get("140006") // Westbank Exchange Bay C
+						)) //
 				.compileBothTripSort());
 		map2.put(29L, new RouteTripSpec(29L, //
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Bear Crk", //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "Boucherie Mtn") //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
-						Arrays.asList(new String[] { //
-						Stops.getALL_STOPS().get("140011"), // Boucherie Mountain Exchange Bay E
-								Stops.getALL_STOPS().get("103115"), // Westlake at Horizon (EB)
-								Stops.getALL_STOPS().get("103043"), // Westside at Bear Creek (SB) => CONTINUE
-						})) //
-				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_1, //
-						Arrays.asList(new String[] { //
-						Stops.getALL_STOPS().get("103043"), // Westside at Bear Creek (SB) <= CONTINUE
-								Stops.getALL_STOPS().get("103078"), // Boucherie at Hayman (WB)
+						Arrays.asList(//
 								Stops.getALL_STOPS().get("140011"), // Boucherie Mountain Exchange Bay E
-						})) //
+								Stops.getALL_STOPS().get("103115"), // Westlake at Horizon (EB)
+								Stops.getALL_STOPS().get("103043") // Westside at Bear Creek (SB) => CONTINUE
+						)) //
+				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_1, //
+						Arrays.asList(//
+								Stops.getALL_STOPS().get("103043"), // Westside at Bear Creek (SB) <= CONTINUE
+								Stops.getALL_STOPS().get("103078"), // Boucherie at Hayman (WB)
+								Stops.getALL_STOPS().get("140011") // Boucherie Mountain Exchange Bay E
+						)) //
 				.compileBothTripSort());
 		map2.put(32L, new RouteTripSpec(32L, //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Main & Grant", //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "Shoreline & Stillwater") //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
-						Arrays.asList(new String[] { //
-						Stops.getALL_STOPS().get("140081"), // Shoreline at Stillwater (NB) <= CONTINUE ?
+						Arrays.asList(//
+								Stops.getALL_STOPS().get("140081"), // Shoreline at Stillwater (NB) <= CONTINUE ?
 								Stops.getALL_STOPS().get("140088"), // Oceola at Pretty (SB) #LakewoodMall
-								Stops.getALL_STOPS().get("103472"), // Main at Grant Rd (NB)
-						})) //
+								Stops.getALL_STOPS().get("103472") // Main at Grant Rd (NB)
+						)) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_1, //
-						Arrays.asList(new String[] { //
-						Stops.getALL_STOPS().get("103472"), // Main at Grant Rd (NB)
+						Arrays.asList(//
+								Stops.getALL_STOPS().get("103472"), // Main at Grant Rd (NB)
 								Stops.getALL_STOPS().get("103685"), // Oceola at Pretty (NB) #LakewoodMall
-								Stops.getALL_STOPS().get("140081"), // Shoreline at Stillwater (NB) => CONTINUE ?
-						})) //
+								Stops.getALL_STOPS().get("140081") // Shoreline at Stillwater (NB) => CONTINUE ?
+						)) //
 				.compileBothTripSort());
 		ALL_ROUTE_TRIPS2 = map2;
 	}
@@ -682,9 +690,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				}
 			}
 		}
-		System.out.printf("\n%s: Unexpected trips head sign for %s!\n", mTrip.getRouteId(), gTrip);
-		System.exit(-1);
-		return;
+		MTLog.logFatal("%s: Unexpected trips head sign for %s!", mTrip.getRouteId(), gTrip);
 	}
 
 	@Override
@@ -698,7 +704,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					OK_COLLEGE, //
 					"South Pandosy", //
 					MISSION_REC_EXCH //
-					).containsAll(headsignsValues)) {
+			).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(MISSION_REC_EXCH, mTrip.getHeadsignId());
 				return true;
 			}
@@ -706,14 +712,14 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 			if (Arrays.asList( //
 					ORCHARD_PK, // <>
 					OK_COLLEGE //
-					).containsAll(headsignsValues)) {
+			).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(OK_COLLEGE, mTrip.getHeadsignId());
 				return true;
 			}
 			if (Arrays.asList( //
 					ORCHARD_PK, // <>
 					UBCO //
-					).containsAll(headsignsValues)) {
+			).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(UBCO, mTrip.getHeadsignId());
 				return true;
 			}
@@ -722,7 +728,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					"North Rutland", // <>
 					ORCHARD_PK, //
 					DOWNTOWN //
-					).containsAll(headsignsValues)) {
+			).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(DOWNTOWN, mTrip.getHeadsignId());
 				return true;
 			}
@@ -731,14 +737,14 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					ORCHARD_PK, // <>
 					BLACK_MOUNTAIN, //
 					RUTLAND //
-					).containsAll(headsignsValues)) {
+			).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(RUTLAND, mTrip.getHeadsignId());
 				return true;
 			}
 			if (Arrays.asList( //
 					ORCHARD_PK, // <>
 					DOWNTOWN //
-					).containsAll(headsignsValues)) {
+			).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(DOWNTOWN, mTrip.getHeadsignId());
 				return true;
 			}
@@ -747,7 +753,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					ORCHARD_PK, //
 					OK_COLLEGE, //
 					SOUTH_PANDOSY //
-					).containsAll(headsignsValues)) {
+			).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(SOUTH_PANDOSY, mTrip.getHeadsignId());
 				return true;
 			}
@@ -755,14 +761,14 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 			if (Arrays.asList( //
 					"Old Vernon Rd", // <>
 					LK_COUNTRY //
-					).containsAll(headsignsValues)) {
+			).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(LK_COUNTRY, mTrip.getHeadsignId());
 				return true;
 			}
 			if (Arrays.asList( //
 					"Old Vernon Rd", // <>
 					UBCO //
-					).containsAll(headsignsValues)) {
+			).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(UBCO, mTrip.getHeadsignId());
 				return true;
 			}
@@ -770,33 +776,32 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 			if (Arrays.asList( //
 					DOWNTOWN, // <>
 					WESTBANK //
-					).containsAll(headsignsValues)) {
+			).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(WESTBANK, mTrip.getHeadsignId());
 				return true;
 			}
 			if (Arrays.asList( //
 					DOWNTOWN, // <>
 					UBCO //
-					).containsAll(headsignsValues)) {
+			).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(UBCO, mTrip.getHeadsignId());
 				return true;
 			}
 		}
-		System.out.printf("\nUnexpected trips to merge %s & %s!\n", mTrip, mTripToMerge);
-		System.exit(-1);
+		MTLog.logFatal("Unexpected trips to merge %s & %s!", mTrip, mTripToMerge);
 		return false;
 	}
 
-	private static final Pattern EXCHANGE = Pattern.compile("((^|\\W){1}(exchange|ex)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
+	private static final Pattern EXCHANGE = Pattern.compile("((^|\\W)(exchange|ex)(\\W|$))", Pattern.CASE_INSENSITIVE);
 	private static final String EXCHANGE_REPLACEMENT = "$2" + EXCH + "$4";
 
 	private static final Pattern STARTS_WITH_NUMBER = Pattern.compile("(^[\\d]+[\\S]*)", Pattern.CASE_INSENSITIVE);
 
-	private static final Pattern STARTS_WITH_DASH = Pattern.compile("(^.* \\- )", Pattern.CASE_INSENSITIVE);
+	private static final Pattern STARTS_WITH_DASH = Pattern.compile("(^.* - )", Pattern.CASE_INSENSITIVE);
 
-	private static final Pattern ENDS_WITH_EXPRESS = Pattern.compile("((\\W){1}(express)($){1})", Pattern.CASE_INSENSITIVE);
+	private static final Pattern ENDS_WITH_EXPRESS = Pattern.compile("((\\W)(express)($))", Pattern.CASE_INSENSITIVE);
 
-	private static final Pattern SPECIAL = Pattern.compile("((^|\\W){1}(special)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
+	private static final Pattern SPECIAL = Pattern.compile("((^|\\W)(special)(\\W|$))", Pattern.CASE_INSENSITIVE);
 
 	@Override
 	public String cleanTripHeadsign(String tripHeadsign) {
@@ -813,13 +818,12 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 		return CleanUtils.cleanLabel(tripHeadsign);
 	}
 
-	private static final Pattern STARTS_WITH_IMPL = Pattern.compile("(^(\\(\\-IMPL\\-\\)))", Pattern.CASE_INSENSITIVE);
-	private static final Pattern STARTS_WITH_BOUND = Pattern.compile("(^(east|west|north|south)bound)", Pattern.CASE_INSENSITIVE);
+	private static final Pattern STARTS_WITH_IMPL = Pattern.compile("(^(\\(-IMPL-\\)))", Pattern.CASE_INSENSITIVE);
 
 	@Override
 	public String cleanStopName(String gStopName) {
 		gStopName = STARTS_WITH_IMPL.matcher(gStopName).replaceAll(StringUtils.EMPTY);
-		gStopName = STARTS_WITH_BOUND.matcher(gStopName).replaceAll(StringUtils.EMPTY);
+		gStopName = CleanUtils.cleanBounds(gStopName);
 		gStopName = CleanUtils.CLEAN_AT.matcher(gStopName).replaceAll(CleanUtils.CLEAN_AT_REPLACEMENT);
 		gStopName = EXCHANGE.matcher(gStopName).replaceAll(EXCHANGE_REPLACEMENT);
 		gStopName = CleanUtils.cleanStreetTypes(gStopName);
