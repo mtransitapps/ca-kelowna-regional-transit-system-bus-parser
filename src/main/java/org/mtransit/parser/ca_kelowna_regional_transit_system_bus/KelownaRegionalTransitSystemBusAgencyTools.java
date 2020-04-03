@@ -536,6 +536,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 		} else if (mRoute.getId() == 14L) {
 			if (gTrip.getDirectionId() == 0) { // Rutland Exch - NORTH
 				if (Arrays.asList( //
+						"Black Mountain", // <>
 						"Black Mountain - To Rutland", //
 						"Black Mountain - To Rutland Exch" //
 				).contains(gTrip.getTripHeadsign())) {
@@ -678,6 +679,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 		} else if (mRoute.getId() == 97L) {
 			if (gTrip.getDirectionId() == 0) { // Westbank - WEST
 				if ("Westbank".equalsIgnoreCase(gTrip.getTripHeadsign()) //
+						|| "To Cooper Stn".equalsIgnoreCase(gTrip.getTripHeadsign()) //
 						|| "Downtown".equalsIgnoreCase(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.WEST);
 					return;
@@ -757,6 +759,14 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				mTrip.setHeadsignString(SOUTH_PANDOSY, mTrip.getHeadsignId());
 				return true;
 			}
+		} else if (mTrip.getRouteId() == 14L) {
+			if (Arrays.asList( //
+					"Black Mtn", // <>
+					"Rutland Exch" //
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString("Rutland Exch", mTrip.getHeadsignId());
+				return true;
+			}
 		} else if (mTrip.getRouteId() == 23L) {
 			if (Arrays.asList( //
 					"Old Vernon Rd", // <>
@@ -775,6 +785,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 		} else if (mTrip.getRouteId() == 97L) {
 			if (Arrays.asList( //
 					DOWNTOWN, // <>
+					"Cooper Stn", //
 					WESTBANK //
 			).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(WESTBANK, mTrip.getHeadsignId());
