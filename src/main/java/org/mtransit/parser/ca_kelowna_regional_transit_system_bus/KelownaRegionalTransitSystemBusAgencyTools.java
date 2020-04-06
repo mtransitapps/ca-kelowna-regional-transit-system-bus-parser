@@ -121,8 +121,8 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 	}
 
 	@Override
-	public long getRouteId(GRoute gRoute) {
-		return Long.parseLong(gRoute.getRouteShortName()); // use route short name as route ID
+	public long getRouteId(GRoute gRoute) {  // used by GTFS-RT
+		return super.getRouteId(gRoute); // used by GTFS-RT
 	}
 
 	@Override
@@ -222,7 +222,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 
 	static {
 		HashMap<Long, RouteTripSpec> map2 = new HashMap<>();
-		map2.put(2L, new RouteTripSpec(2L, //
+		map2.put(2L, new RouteTripSpec(2L, // 2 //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, QUEENSWAY_EXCH, //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "Cambridge & Ellis") //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
@@ -238,7 +238,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 								Stops.getALL_STOPS().get("102932") // Cambridge at Ellis (EB) => CONTINUE
 						)) //
 				.compileBothTripSort());
-		map2.put(3L, new RouteTripSpec(3L, //
+		map2.put(3L, new RouteTripSpec(3L, // 3 //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, ORCHARD_PK, //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "Glenmore @ Summit") //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
@@ -254,7 +254,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 								Stops.getALL_STOPS().get("103041") // Glenmore AT Summit (NB) => CONTINUE
 						)) //
 				.compileBothTripSort());
-		map2.put(13L, new RouteTripSpec(13L, //
+		map2.put(12L, new RouteTripSpec(12L, // 13 //
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Country Club", //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, UBCO) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
@@ -270,7 +270,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 								Stops.getALL_STOPS().get("140104") // UBCO Exchange Bay D
 						)) //
 				.compileBothTripSort());
-		map2.put(15L, new RouteTripSpec(15L, //
+		map2.put(14L, new RouteTripSpec(14L, // 15 //
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Crawford", //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, MISSION_REC_EXCH) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
@@ -286,7 +286,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 								Stops.getALL_STOPS().get("103021") // Mission Rec Exchange Bay A
 						)) //
 				.compileBothTripSort());
-		map2.put(16L, new RouteTripSpec(16L, //
+		map2.put(15L, new RouteTripSpec(15L, // 16 //
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Kettle Vly", //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, MISSION_REC_EXCH) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
@@ -304,7 +304,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 								Stops.getALL_STOPS().get("103022") // Mission Rec Exchange Bay B
 						)) //
 				.compileBothTripSort());
-		map2.put(17L, new RouteTripSpec(17L, //
+		map2.put(16L, new RouteTripSpec(16L, // 17
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Southridge", //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, MISSION_REC_EXCH) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
@@ -321,7 +321,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 								Stops.getALL_STOPS().get("103022") // Mission Rec Exchange Bay B
 						)) //
 				.compileBothTripSort());
-		map2.put(21L, new RouteTripSpec(21L, //
+		map2.put(20L, new RouteTripSpec(20L, // 21
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, GLENROSA, //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, WESTBANK) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
@@ -337,7 +337,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 								Stops.getALL_STOPS().get("140006") // Westbank Exchange Bay C
 						)) //
 				.compileBothTripSort());
-		map2.put(29L, new RouteTripSpec(29L, //
+		map2.put(27L, new RouteTripSpec(27L, // 29 //
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Bear Crk", //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "Boucherie Mtn") //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
@@ -353,7 +353,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 								Stops.getALL_STOPS().get("140011") // Boucherie Mountain Exchange Bay E
 						)) //
 				.compileBothTripSort());
-		map2.put(32L, new RouteTripSpec(32L, //
+		map2.put(28L, new RouteTripSpec(28L, // 32 //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Main & Grant", //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "Shoreline & Stillwater") //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
@@ -396,12 +396,16 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 		return super.splitTripStop(mRoute, gTrip, gTripStop, splitTrips, routeGTFS);
 	}
 
+	private final HashMap<Long, Long> routeIdToShortName = new HashMap<>();
+
 	@Override
 	public void setTripHeadsign(MRoute mRoute, MTrip mTrip, GTrip gTrip, GSpec gtfs) {
 		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
 			return; // split
 		}
-		if (mRoute.getId() == 1L) {
+		final long rsn = Long.parseLong(mRoute.getShortName());
+		this.routeIdToShortName.put(mRoute.getId(), rsn);
+		if (rsn == 1L) {
 			if (gTrip.getDirectionId() == 0) { // Downtown - NORTH
 				if ("Downtown".equalsIgnoreCase(gTrip.getTripHeadsign()) //
 						|| "".equalsIgnoreCase(gTrip.getTripHeadsign())) {
@@ -419,7 +423,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
-		} else if (mRoute.getId() == 4L) {
+		} else if (rsn == 4L) {
 			if (gTrip.getDirectionId() == 0) { // UBCO - NORTH
 				if ("UBCO Express".equalsIgnoreCase(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.NORTH);
@@ -431,7 +435,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
-		} else if (mRoute.getId() == 5L) {
+		} else if (rsn == 5L) {
 			if (gTrip.getDirectionId() == 0) { // Downtown - NORTH
 				if ("Downtown".equalsIgnoreCase(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.NORTH);
@@ -443,7 +447,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
-		} else if (mRoute.getId() == 6L) {
+		} else if (rsn == 6L) {
 			if (gTrip.getDirectionId() == 0) { // Downtown - INBOUND // Queensway Exch - INBOUND
 				if ("Downtown".equalsIgnoreCase(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.INBOUND);
@@ -455,7 +459,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
-		} else if (mRoute.getId() == 8L) {
+		} else if (rsn == 8L) {
 			if (gTrip.getDirectionId() == 0) { // UBCO - NORTH
 				if ("University - To UBCO".equalsIgnoreCase(gTrip.getTripHeadsign()) //
 						|| "To Orchard Park".equalsIgnoreCase(gTrip.getTripHeadsign())) {
@@ -470,7 +474,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
-		} else if (mRoute.getId() == 9L) {
+		} else if (rsn == 9L) {
 			if (gTrip.getDirectionId() == 0) { // Downtown - WEST
 				if ("Shopper Shuttle - To Downtown".equalsIgnoreCase(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.WEST);
@@ -482,7 +486,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
-		} else if (mRoute.getId() == 10L) {
+		} else if (rsn == 10L) {
 			if (gTrip.getDirectionId() == 0) { // Queensway Exch - WEST
 				if (Arrays.asList( //
 						"North Rutland", // <>
@@ -498,7 +502,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
-		} else if (mRoute.getId() == 11L) {
+		} else if (rsn == 11L) {
 			if (gTrip.getDirectionId() == 0) { // Downtown - WEST
 				if (Arrays.asList( //
 						"Downtown", //
@@ -519,7 +523,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
-		} else if (mRoute.getId() == 12L) {
+		} else if (rsn == 12L) {
 			if (gTrip.getDirectionId() == 0) { // S.Pandosy Exch - WEST
 				if ("McCulloch - To Orchard Park".equalsIgnoreCase(gTrip.getTripHeadsign()) //
 						|| "McCulloch - To South Pandosy".equalsIgnoreCase(gTrip.getTripHeadsign()) //
@@ -533,7 +537,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
-		} else if (mRoute.getId() == 14L) {
+		} else if (rsn == 14L) {
 			if (gTrip.getDirectionId() == 0) { // Rutland Exch - NORTH
 				if (Arrays.asList( //
 						"Black Mountain", // <>
@@ -549,7 +553,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
-		} else if (mRoute.getId() == 18L) {
+		} else if (rsn == 18L) {
 			if (gTrip.getDirectionId() == 0) { // Glenmore - NORTH
 				if ("Glenmore".equalsIgnoreCase(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.NORTH);
@@ -561,7 +565,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
-		} else if (mRoute.getId() == 19L) {
+		} else if (rsn == 19L) {
 			if (gTrip.getDirectionId() == 0) { // Glenmore - NORTH
 				if ("Glenmore".equalsIgnoreCase(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.NORTH);
@@ -573,7 +577,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
-		} else if (mRoute.getId() == 20L) {
+		} else if (rsn == 20L) {
 			if (gTrip.getDirectionId() == 0) { // Westbank - WEST
 				if ("Lakeview - To Westbank".equalsIgnoreCase(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.WEST);
@@ -585,7 +589,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
-		} else if (mRoute.getId() == 22L) {
+		} else if (rsn == 22L) {
 			if (gTrip.getDirectionId() == 0) { // Westbank - NORTH
 				if ("Peachland - To Westbank".equalsIgnoreCase(gTrip.getTripHeadsign()) //
 						|| "Peachland Exp - To Westbank".equalsIgnoreCase(gTrip.getTripHeadsign())) {
@@ -598,7 +602,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
-		} else if (mRoute.getId() == 23L) {
+		} else if (rsn == 23L) {
 			if (gTrip.getDirectionId() == 0) { // Lake Country - NORTH
 				if ("Lake Country".equalsIgnoreCase(gTrip.getTripHeadsign()) //
 						|| "Lake Country Via Airport".equalsIgnoreCase(gTrip.getTripHeadsign()) //
@@ -614,7 +618,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
-		} else if (mRoute.getId() == 24L) {
+		} else if (rsn == 24L) {
 			if (gTrip.getDirectionId() == 0) { // Westbank - WEST
 				if ("Shannon Lake - To Westbank".equalsIgnoreCase(gTrip.getTripHeadsign()) //
 						|| "Shannon Ridge- To Westbank".equalsIgnoreCase(gTrip.getTripHeadsign())) {
@@ -628,7 +632,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
-		} else if (mRoute.getId() == 25L) {
+		} else if (rsn == 25L) {
 			if (gTrip.getDirectionId() == 0) { // Westbank - WEST
 				if ("East Boundary - To Westbank".equalsIgnoreCase(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.WEST);
@@ -640,7 +644,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
-		} else if (mRoute.getId() == 26L) {
+		} else if (rsn == 26L) {
 			if (gTrip.getDirectionId() == 0) { // Boucherie Mtn - NORTH
 				if ("Old Okanagan - Boucherie Mtn".equalsIgnoreCase(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.NORTH);
@@ -653,7 +657,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
-		} else if (mRoute.getId() == 28L) { //
+		} else if (rsn == 28L) { //
 			if (gTrip.getDirectionId() == 0) { // Boucherie Mtn - NORTH
 				if ("Shannon Lake - Boucherie Mtn".equalsIgnoreCase(gTrip.getTripHeadsign())) {
 					mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), StrategicMappingCommons.NORTH);
@@ -665,7 +669,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
-		} else if (mRoute.getId() == 88L) { //
+		} else if (rsn == 88L) { //
 			if (gTrip.getDirectionId() == 1) { // Boucherie Mtn - OUTBOUND // Special - OUTBOUND
 				if ("Special".equalsIgnoreCase(gTrip.getTripHeadsign())) {
 					if ("Special".equalsIgnoreCase(gTrip.getTripHeadsign())) {
@@ -676,7 +680,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
-		} else if (mRoute.getId() == 97L) {
+		} else if (rsn == 97L) {
 			if (gTrip.getDirectionId() == 0) { // Westbank - WEST
 				if ("Westbank".equalsIgnoreCase(gTrip.getTripHeadsign()) //
 						|| "To Cooper Stn".equalsIgnoreCase(gTrip.getTripHeadsign()) //
@@ -701,7 +705,8 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 			return true;
 		}
 		List<String> headsignsValues = Arrays.asList(mTrip.getHeadsignValue(), mTripToMerge.getHeadsignValue());
-		if (mTrip.getRouteId() == 1L) {
+		final long rsn = this.routeIdToShortName.get(mTrip.getRouteId());
+		if (rsn == 1L) {
 			if (Arrays.asList( //
 					OK_COLLEGE, //
 					"South Pandosy", //
@@ -710,7 +715,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				mTrip.setHeadsignString(MISSION_REC_EXCH, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 8L) {
+		} else if (rsn == 8L) {
 			if (Arrays.asList( //
 					ORCHARD_PK, // <>
 					OK_COLLEGE //
@@ -725,7 +730,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				mTrip.setHeadsignString(UBCO, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 10L) {
+		} else if (rsn == 10L) {
 			if (Arrays.asList( //
 					"North Rutland", // <>
 					ORCHARD_PK, //
@@ -734,7 +739,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				mTrip.setHeadsignString(DOWNTOWN, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 11L) {
+		} else if (rsn == 11L) {
 			if (Arrays.asList( //
 					ORCHARD_PK, // <>
 					BLACK_MOUNTAIN, //
@@ -750,7 +755,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				mTrip.setHeadsignString(DOWNTOWN, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 12L) {
+		} else if (rsn == 12L) {
 			if (Arrays.asList( //
 					ORCHARD_PK, //
 					OK_COLLEGE, //
@@ -759,7 +764,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				mTrip.setHeadsignString(SOUTH_PANDOSY, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 14L) {
+		} else if (rsn == 14L) {
 			if (Arrays.asList( //
 					"Black Mtn", // <>
 					"Rutland Exch" //
@@ -767,7 +772,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				mTrip.setHeadsignString("Rutland Exch", mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 23L) {
+		} else if (rsn == 23L) {
 			if (Arrays.asList( //
 					"Old Vernon Rd", // <>
 					LK_COUNTRY //
@@ -782,7 +787,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				mTrip.setHeadsignString(UBCO, mTrip.getHeadsignId());
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 97L) {
+		} else if (rsn == 97L) {
 			if (Arrays.asList( //
 					DOWNTOWN, // <>
 					"Cooper Stn", //
@@ -843,7 +848,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 	}
 
 	@Override
-	public int getStopId(GStop gStop) {
-		return Integer.parseInt(gStop.getStopCode()); // use stop code as stop ID
+	public int getStopId(GStop gStop) { // used by GTFS-RT
+		return super.getStopId(gStop);
 	}
 }
