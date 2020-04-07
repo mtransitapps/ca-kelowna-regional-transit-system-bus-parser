@@ -254,7 +254,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 								Stops.getALL_STOPS().get("103041") // Glenmore AT Summit (NB) => CONTINUE
 						)) //
 				.compileBothTripSort());
-		map2.put(12L, new RouteTripSpec(12L, // 13 //
+		map2.put(-1L, new RouteTripSpec(-1L, // 13 //
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Country Club", //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, UBCO) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
@@ -270,7 +270,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 								Stops.getALL_STOPS().get("140104") // UBCO Exchange Bay D
 						)) //
 				.compileBothTripSort());
-		map2.put(14L, new RouteTripSpec(14L, // 15 //
+		map2.put(12L, new RouteTripSpec(12L, // 15 //
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Crawford", //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, MISSION_REC_EXCH) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
@@ -286,7 +286,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 								Stops.getALL_STOPS().get("103021") // Mission Rec Exchange Bay A
 						)) //
 				.compileBothTripSort());
-		map2.put(15L, new RouteTripSpec(15L, // 16 //
+		map2.put(13L, new RouteTripSpec(13L, // 16 //
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Kettle Vly", //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, MISSION_REC_EXCH) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
@@ -304,7 +304,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 								Stops.getALL_STOPS().get("103022") // Mission Rec Exchange Bay B
 						)) //
 				.compileBothTripSort());
-		map2.put(16L, new RouteTripSpec(16L, // 17
+		map2.put(14L, new RouteTripSpec(14L, // 17
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Southridge", //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, MISSION_REC_EXCH) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
@@ -321,7 +321,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 								Stops.getALL_STOPS().get("103022") // Mission Rec Exchange Bay B
 						)) //
 				.compileBothTripSort());
-		map2.put(20L, new RouteTripSpec(20L, // 21
+		map2.put(18L, new RouteTripSpec(18L, // 21
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, GLENROSA, //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, WESTBANK) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
@@ -337,7 +337,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 								Stops.getALL_STOPS().get("140006") // Westbank Exchange Bay C
 						)) //
 				.compileBothTripSort());
-		map2.put(27L, new RouteTripSpec(27L, // 29 //
+		map2.put(25L, new RouteTripSpec(25L, // 29 //
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Bear Crk", //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "Boucherie Mtn") //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
@@ -353,7 +353,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 								Stops.getALL_STOPS().get("140011") // Boucherie Mountain Exchange Bay E
 						)) //
 				.compileBothTripSort());
-		map2.put(28L, new RouteTripSpec(28L, // 32 //
+		map2.put(26L, new RouteTripSpec(26L, // 32 //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Main & Grant", //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "Shoreline & Stillwater") //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
