@@ -541,6 +541,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 			if (gTrip.getDirectionId() == 0) { // Rutland Exch - NORTH
 				if (Arrays.asList( //
 						"Black Mountain", // <>
+						"Black Mountain - To Orchard Park", //
 						"Black Mountain - To Rutland", //
 						"Black Mountain - To Rutland Exch" //
 				).contains(gTrip.getTripHeadsign())) {
@@ -767,6 +768,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 		} else if (rsn == 14L) {
 			if (Arrays.asList( //
 					"Black Mtn", // <>
+					"Orchard Pk", //
 					"Rutland Exch" //
 			).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString("Rutland Exch", mTrip.getHeadsignId());
