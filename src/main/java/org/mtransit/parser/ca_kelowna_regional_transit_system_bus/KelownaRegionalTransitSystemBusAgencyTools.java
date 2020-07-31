@@ -357,15 +357,15 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Main & Grant", //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "Shoreline & Stillwater") //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("140081"), // Shoreline at Stillwater (NB) <= CONTINUE ?
 								Stops.getALL_STOPS().get("140088"), // Oceola at Pretty (SB) #LakewoodMall
 								Stops.getALL_STOPS().get("103472") // Main at Grant Rd (NB)
 						)) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_1, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("103472"), // Main at Grant Rd (NB)
-								Stops.getALL_STOPS().get("103685"), // Oceola at Pretty (NB) #LakewoodMall
+								Stops.getALL_STOPS().get("103685"), "59380", // Oceola at Pretty (NB) #LakewoodMall
 								Stops.getALL_STOPS().get("140081") // Shoreline at Stillwater (NB) => CONTINUE ?
 						)) //
 				.compileBothTripSort());
