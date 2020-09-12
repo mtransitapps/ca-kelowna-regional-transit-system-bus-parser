@@ -218,37 +218,39 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 	private static final String WESTBANK = "Westbank";
 	private static final String DOWNTOWN = "Downtown";
 
+	private static final long ROUTE_ID_0 = 1944L;
+
 	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
 
 	static {
 		HashMap<Long, RouteTripSpec> map2 = new HashMap<>();
-		map2.put(1888L, new RouteTripSpec(1888L, // 2 //
+		map2.put(ROUTE_ID_0 + 2L, new RouteTripSpec(ROUTE_ID_0 + 2L, // 2 //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, QUEENSWAY_EXCH, //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "Cambridge & Ellis") //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("102932"), // Cambridge at Ellis (EB) <= CONTINUE
 								Stops.getALL_STOPS().get("102895"), // ++ Richter at Gaston (SB)
 								Stops.getALL_STOPS().get("102859") // Queensway Exchange Bay E
 						)) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_1, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("102859"), // Queensway Exchange Bay E
 								Stops.getALL_STOPS().get("102888"), // ++ Ellis at Industrial (NB)
 								Stops.getALL_STOPS().get("102932") // Cambridge at Ellis (EB) => CONTINUE
 						)) //
 				.compileBothTripSort());
-		map2.put(1889L, new RouteTripSpec(1889L, // 3 //
+		map2.put(ROUTE_ID_0 + 3L, new RouteTripSpec(ROUTE_ID_0 + 3L, // 3 //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, ORCHARD_PK, //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "Glenmore @ Summit") //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("103041"), // Glenmore AT Summit (NB) <= CONTINUE
 								Stops.getALL_STOPS().get("103168"), // ++ Summit at Dilworth (EB)
 								Stops.getALL_STOPS().get("103079") // Orchard Park Exchange Bay G
 						)) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_1, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("103079"), // Orchard Park Exchange Bay G
 								Stops.getALL_STOPS().get("103170"), // ++ Summit at Dilworth (WB)
 								Stops.getALL_STOPS().get("103041") // Glenmore AT Summit (NB) => CONTINUE
@@ -258,102 +260,102 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Country Club", //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, UBCO) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("140104"), // UBCO Exchange Bay E
 								Stops.getALL_STOPS().get("104916"), // ++
 								Stops.getALL_STOPS().get("103858") // Country Club 1740 block
 						)) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_1, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("103858"), // Country Club 1740 block
 								Stops.getALL_STOPS().get("103851"), // ++ Quail Ridge at Country Club
 								Stops.getALL_STOPS().get("140104") // UBCO Exchange Bay D
 						)) //
 				.compileBothTripSort());
-		map2.put(1898L, new RouteTripSpec(1898L, // 15 //
+		map2.put(ROUTE_ID_0 + 13L, new RouteTripSpec(ROUTE_ID_0 + 13L, // 15 //
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Crawford", //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, MISSION_REC_EXCH) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("103021"), // Mission Rec Exchange Bay A
 								Stops.getALL_STOPS().get("103316"), // Dehart at Gordon (EB)
 								Stops.getALL_STOPS().get("103401") // Westridge at Crawford (SB) => CONTINUE
 						)) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_1, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("103401"), // Westridge at Crawford (SB) <= CONTINUE
 								Stops.getALL_STOPS().get("103423"), // Westridge at Blueridge (SB)
 								Stops.getALL_STOPS().get("103021") // Mission Rec Exchange Bay A
 						)) //
 				.compileBothTripSort());
-		map2.put(1899L, new RouteTripSpec(1899L, // 16 //
+		map2.put(ROUTE_ID_0 + 14L, new RouteTripSpec(ROUTE_ID_0 + 14L, // 16 //
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Kettle Vly", //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, MISSION_REC_EXCH) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("103022"), // Mission Rec Exchange Bay B
 								Stops.getALL_STOPS().get("103319"), // Lakeshore at Dehart (SB)
 								Stops.getALL_STOPS().get("103808"), // Chute Lake at South Crest (SB)
 								Stops.getALL_STOPS().get("103562") // Quilchena at Providence (SB) #KettleVly => CONTINUE
 						)) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_1, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("103814"), // South Perimeter at Farron (EB) #KettleVly <= CONTINUE
 								Stops.getALL_STOPS().get("103809"), // Chute Lake at South Crest (NB)
 								Stops.getALL_STOPS().get("103317"), // Lakeshore at Dehart (NB)
 								Stops.getALL_STOPS().get("103022") // Mission Rec Exchange Bay B
 						)) //
 				.compileBothTripSort());
-		map2.put(1900L, new RouteTripSpec(1900L, // 17
+		map2.put(ROUTE_ID_0 + 15L, new RouteTripSpec(ROUTE_ID_0 + 15L, // 17
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Southridge", //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, MISSION_REC_EXCH) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("103022"), // Mission Rec Exchange Bay B
 								Stops.getALL_STOPS().get("103325"), // Gordon at Dehart (SB)
 								Stops.getALL_STOPS().get("103191") // South Ridge at Frost (NB) => CONTINUE
 						)) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_1, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("103191"), // South Ridge at Frost (NB) <= CONTINUE
 								Stops.getALL_STOPS().get("103820"), // Gordon at Raymer (NB)
 								Stops.getALL_STOPS().get("103818"), // Gordon at Tozer (NB)
 								Stops.getALL_STOPS().get("103022") // Mission Rec Exchange Bay B
 						)) //
 				.compileBothTripSort());
-		map2.put(1904L, new RouteTripSpec(1904L, // 21
+		map2.put(ROUTE_ID_0 + 19L, new RouteTripSpec(ROUTE_ID_0 + 19L, // 21
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, GLENROSA, //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, WESTBANK) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("140006"), // Westbank Exchange Bay C
 								Stops.getALL_STOPS().get("103624"), // McNair at Webber
 								Stops.getALL_STOPS().get("103641") // Canary @ Blue Jay
 						)) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_1, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("103641"), // Canary @ Blue Jay
 								Stops.getALL_STOPS().get("103643"), // Glenrosa at Dunfield
 								Stops.getALL_STOPS().get("140006") // Westbank Exchange Bay C
 						)) //
 				.compileBothTripSort());
-		map2.put(1911L, new RouteTripSpec(1911L, // 29 //
+		map2.put(ROUTE_ID_0 + 26L, new RouteTripSpec(ROUTE_ID_0 + 26L, // 29 //
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Bear Crk", //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "Boucherie Mtn") //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("140011"), // Boucherie Mountain Exchange Bay E
 								Stops.getALL_STOPS().get("103115"), // Westlake at Horizon (EB)
 								Stops.getALL_STOPS().get("103043") // Westside at Bear Creek (SB) => CONTINUE
 						)) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_1, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("103043"), // Westside at Bear Creek (SB) <= CONTINUE
 								Stops.getALL_STOPS().get("103078"), // Boucherie at Hayman (WB)
 								Stops.getALL_STOPS().get("140011") // Boucherie Mountain Exchange Bay E
 						)) //
 				.compileBothTripSort());
-		map2.put(1912L, new RouteTripSpec(1912L, // 32 //
+		map2.put(ROUTE_ID_0 + 27L, new RouteTripSpec(ROUTE_ID_0 + 27L, // 32 //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Main & Grant", //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "Shoreline & Stillwater") //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
@@ -423,6 +425,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 					return;
 				}
 			}
+			// Dilworth Mtn
 		} else if (rsn == 4L) {
 			if (gTrip.getDirectionId() == 0) { // UBCO - NORTH
 				if ("UBCO Express".equalsIgnoreCase(gTrip.getTripHeadsign())) {
