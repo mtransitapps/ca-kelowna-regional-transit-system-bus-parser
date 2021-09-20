@@ -1,80 +1,35 @@
 package org.mtransit.parser.ca_kelowna_regional_transit_system_bus;
 
+import static org.mtransit.commons.Constants.EMPTY;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.mtransit.parser.CleanUtils;
+import org.mtransit.commons.CleanUtils;
 import org.mtransit.parser.DefaultAgencyTools;
 import org.mtransit.parser.MTLog;
-import org.mtransit.parser.StringUtils;
-import org.mtransit.parser.Utils;
-import org.mtransit.parser.gtfs.data.GCalendar;
-import org.mtransit.parser.gtfs.data.GCalendarDate;
 import org.mtransit.parser.gtfs.data.GRoute;
-import org.mtransit.parser.gtfs.data.GSpec;
 import org.mtransit.parser.gtfs.data.GStop;
-import org.mtransit.parser.gtfs.data.GTrip;
 import org.mtransit.parser.mt.data.MAgency;
-import org.mtransit.parser.mt.data.MRoute;
-import org.mtransit.parser.mt.data.MTrip;
 
-import java.util.HashSet;
 import java.util.regex.Pattern;
-
-import static org.mtransit.parser.Constants.EMPTY;
 
 // https://www.bctransit.com/open-data
 // https://kelowna.mapstrat.com/current/google_transit.zip
 public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
-	public static void main(@Nullable String[] args) {
-		if (args == null || args.length == 0) {
-			args = new String[3];
-			args[0] = "input/gtfs.zip";
-			args[1] = "../../mtransitapps/ca-kelowna-regional-transit-system-bus-android/res/raw/";
-			args[2] = ""; // files-prefix
-		}
+	public static void main(@NotNull String[] args) {
 		new KelownaRegionalTransitSystemBusAgencyTools().start(args);
 	}
 
-	@Nullable
-	private HashSet<Integer> serviceIdInts;
-
 	@Override
-	public void start(@NotNull String[] args) {
-		MTLog.log("Generating Kelowna Regional TS bus data...");
-		long start = System.currentTimeMillis();
-		this.serviceIdInts = extractUsefulServiceIdInts(args, this, true);
-		super.start(args);
-		MTLog.log("Generating Kelowna Regional TS bus data... DONE in %s.", Utils.getPrettyDuration(System.currentTimeMillis() - start));
+	public boolean defaultExcludeEnabled() {
+		return true;
 	}
 
+	@NotNull
 	@Override
-	public boolean excludingAll() {
-		return this.serviceIdInts != null && this.serviceIdInts.isEmpty();
-	}
-
-	@Override
-	public boolean excludeCalendar(@NotNull GCalendar gCalendar) {
-		if (this.serviceIdInts != null) {
-			return excludeUselessCalendarInt(gCalendar, this.serviceIdInts);
-		}
-		return super.excludeCalendar(gCalendar);
-	}
-
-	@Override
-	public boolean excludeCalendarDate(@NotNull GCalendarDate gCalendarDates) {
-		if (this.serviceIdInts != null) {
-			return excludeUselessCalendarDateInt(gCalendarDates, this.serviceIdInts);
-		}
-		return super.excludeCalendarDate(gCalendarDates);
-	}
-
-	@Override
-	public boolean excludeTrip(@NotNull GTrip gTrip) {
-		if (this.serviceIdInts != null) {
-			return excludeUselessTripInt(gTrip, this.serviceIdInts);
-		}
-		return super.excludeTrip(gTrip);
+	public String getAgencyName() {
+		return "Kelowna Regional TS";
 	}
 
 	@NotNull
@@ -84,24 +39,32 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 	}
 
 	@Override
-	public long getRouteId(@NotNull GRoute gRoute) {  // used by GTFS-RT
-		return super.getRouteId(gRoute); // used by GTFS-RT
+	public boolean defaultRouteIdEnabled() {
+		return true;
+	}
+
+	@Override
+	public boolean useRouteShortNameForRouteId() {
+		return false;  // used by GTFS-RT
+	}
+
+	@Override
+	public boolean defaultRouteLongNameEnabled() {
+		return true;
 	}
 
 	@NotNull
 	@Override
-	public String getRouteLongName(@NotNull GRoute gRoute) {
-		String routeLongName = gRoute.getRouteLongNameOrDefault();
-		if (StringUtils.isEmpty(routeLongName)) {
-			routeLongName = gRoute.getRouteDesc();
-		}
-		if (StringUtils.isEmpty(routeLongName)) {
-			throw new MTLog.Fatal("Unexpected route long name for %s!", gRoute);
-		}
+	public String cleanRouteLongName(@NotNull String routeLongName) {
 		routeLongName = CleanUtils.cleanSlashes(routeLongName);
 		routeLongName = CleanUtils.cleanNumbers(routeLongName);
 		routeLongName = CleanUtils.cleanStreetTypes(routeLongName);
 		return CleanUtils.cleanLabel(routeLongName);
+	}
+
+	@Override
+	public boolean defaultAgencyColorEnabled() {
+		return true;
 	}
 
 	private static final String AGENCY_COLOR_GREEN = "34B233";// GREEN (from PDF Corporate Graphic Standards)
@@ -115,65 +78,48 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 		return AGENCY_COLOR;
 	}
 
-	private static final String COLOR_3FA0D6 = "3FA0D6";
-	private static final String COLOR_7B9597 = "7B9597";
-	private static final String COLOR_F17C15 = "F17C15";
-
 	@SuppressWarnings("DuplicateBranchesInSwitch")
 	@Nullable
 	@Override
-	public String getRouteColor(@NotNull GRoute gRoute) {
-		if (StringUtils.isEmpty(gRoute.getRouteColor())) {
-			int rsn = Integer.parseInt(gRoute.getRouteShortName());
-			switch (rsn) {
-			// @formatter:off
-			case 1: return COLOR_3FA0D6;
-			case 2: return COLOR_7B9597;
-			case 3: return COLOR_7B9597;
-			case 4: return COLOR_7B9597;
-			case 5: return COLOR_3FA0D6;
-			case 6: return COLOR_7B9597;
-			case 7: return COLOR_3FA0D6;
-			case 8: return COLOR_3FA0D6;
-			case 9: return COLOR_7B9597;
-			case 10: return COLOR_3FA0D6;
-			case 11: return COLOR_3FA0D6;
-			case 12: return COLOR_7B9597;
-			case 13: return COLOR_7B9597;
-			case 14: return COLOR_7B9597;
-			case 15: return COLOR_7B9597;
-			case 16: return COLOR_7B9597;
-			case 17: return COLOR_7B9597;
-			case 18: return COLOR_7B9597;
-			case 19: return COLOR_7B9597;
-			case 20: return COLOR_7B9597;
-			case 21: return COLOR_7B9597;
-			case 22: return COLOR_7B9597;
-			case 23: return COLOR_3FA0D6;
-			case 24: return COLOR_7B9597;
-			case 25: return COLOR_7B9597;
-			case 27: return COLOR_7B9597;
-			case 28: return COLOR_7B9597;
-			case 29: return COLOR_7B9597;
-			case 32: return COLOR_7B9597;
-			case 90: return COLOR_7B9597;
-			case 97: return COLOR_F17C15;
-			// @formatter:on
-			default:
-				throw new MTLog.Fatal("Unexpected route color %s!", gRoute);
-			}
+	public String provideMissingRouteColor(@NotNull GRoute gRoute) {
+		final int rsn = Integer.parseInt(gRoute.getRouteShortName());
+		switch (rsn) {
+		// @formatter:off
+		case 1: return "3FA0D6";
+		case 2: return "7B9597";
+		case 3: return "7B9597";
+		case 4: return "7B9597";
+		case 5: return "3FA0D6";
+		case 6: return "7B9597";
+		case 7: return "3FA0D6";
+		case 8: return "3FA0D6";
+		case 9: return "7B9597";
+		case 10: return "3FA0D6";
+		case 11: return "3FA0D6";
+		case 12: return "7B9597";
+		case 13: return "7B9597";
+		case 14: return "7B9597";
+		case 15: return "7B9597";
+		case 16: return "7B9597";
+		case 17: return "7B9597";
+		case 18: return "7B9597";
+		case 19: return "7B9597";
+		case 20: return "7B9597";
+		case 21: return "7B9597";
+		case 22: return "7B9597";
+		case 23: return "3FA0D6";
+		case 24: return "7B9597";
+		case 25: return "7B9597";
+		case 27: return "7B9597";
+		case 28: return "7B9597";
+		case 29: return "7B9597";
+		case 32: return "7B9597";
+		case 90: return "7B9597";
+		case 97: return "F17C15";
+		// @formatter:on
+		default:
+			throw new MTLog.Fatal("Unexpected route color %s!", gRoute);
 		}
-		return super.getRouteColor(gRoute);
-	}
-
-	private static final String EXCH = "Exch";
-
-	@Override
-	public void setTripHeadsign(@NotNull MRoute mRoute, @NotNull MTrip mTrip, @NotNull GTrip gTrip, @NotNull GSpec gtfs) {
-		mTrip.setHeadsignString(
-				cleanTripHeadsign(gTrip.getTripHeadsignOrDefault()),
-				gTrip.getDirectionIdOrDefault()
-		);
 	}
 
 	@Override
@@ -181,13 +127,8 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 		return true;
 	}
 
-	@Override
-	public boolean mergeHeadsign(@NotNull MTrip mTrip, @NotNull MTrip mTripToMerge) {
-		throw new MTLog.Fatal("Unexpected trips to merge %s & %s!", mTrip, mTripToMerge);
-	}
-
-	private static final Pattern EXCHANGE = Pattern.compile("((^|\\W)(exchange|ex)(\\W|$))", Pattern.CASE_INSENSITIVE);
-	private static final String EXCHANGE_REPLACEMENT = "$2" + EXCH + "$4";
+	private static final Pattern FIX_EXCHANGE = CleanUtils.cleanWord("ex");
+	private static final String FIX_EXCHANGE_REPLACEMENT = CleanUtils.cleanWordsReplacement("exchange");
 
 	private static final Pattern STARTS_WITH_NUMBER = Pattern.compile("(^[\\d]+[\\S]*)", Pattern.CASE_INSENSITIVE);
 
@@ -201,13 +142,12 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 	@Override
 	public String cleanTripHeadsign(@NotNull String tripHeadsign) {
 		tripHeadsign = CleanUtils.keepToAndRemoveVia(tripHeadsign);
-		tripHeadsign = EXCHANGE.matcher(tripHeadsign).replaceAll(EXCHANGE_REPLACEMENT);
 		tripHeadsign = CleanUtils.CLEAN_AND.matcher(tripHeadsign).replaceAll(CleanUtils.CLEAN_AND_REPLACEMENT);
+		tripHeadsign = FIX_EXCHANGE.matcher(tripHeadsign).replaceAll(FIX_EXCHANGE_REPLACEMENT);
 		tripHeadsign = STARTS_WITH_NUMBER.matcher(tripHeadsign).replaceAll(EMPTY);
 		tripHeadsign = STARTS_WITH_DASH.matcher(tripHeadsign).replaceAll(EMPTY);
 		tripHeadsign = ENDS_WITH_EXPRESS.matcher(tripHeadsign).replaceAll(EMPTY);
 		tripHeadsign = SPECIAL.matcher(tripHeadsign).replaceAll(EMPTY);
-		tripHeadsign = CleanUtils.removePoints(tripHeadsign);
 		tripHeadsign = CleanUtils.cleanStreetTypes(tripHeadsign);
 		tripHeadsign = CleanUtils.cleanNumbers(tripHeadsign);
 		return CleanUtils.cleanLabel(tripHeadsign);
@@ -221,9 +161,9 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 	public String cleanStopName(@NotNull String gStopName) {
 		gStopName = STARTS_WITH_DCOM.matcher(gStopName).replaceAll(EMPTY);
 		gStopName = STARTS_WITH_IMPL.matcher(gStopName).replaceAll(EMPTY);
+		gStopName = FIX_EXCHANGE.matcher(gStopName).replaceAll(FIX_EXCHANGE_REPLACEMENT);
 		gStopName = CleanUtils.cleanBounds(gStopName);
 		gStopName = CleanUtils.CLEAN_AT.matcher(gStopName).replaceAll(CleanUtils.CLEAN_AT_REPLACEMENT);
-		gStopName = EXCHANGE.matcher(gStopName).replaceAll(EXCHANGE_REPLACEMENT);
 		gStopName = CleanUtils.cleanStreetTypes(gStopName);
 		gStopName = CleanUtils.cleanNumbers(gStopName);
 		return CleanUtils.cleanLabel(gStopName);
