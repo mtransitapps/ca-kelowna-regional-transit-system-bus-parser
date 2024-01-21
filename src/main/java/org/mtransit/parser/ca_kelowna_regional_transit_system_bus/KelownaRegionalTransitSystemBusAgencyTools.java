@@ -14,7 +14,6 @@ import org.mtransit.parser.mt.data.MAgency;
 import java.util.regex.Pattern;
 
 // https://www.bctransit.com/open-data
-// https://kelowna.mapstrat.com/current/google_transit.zip
 public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	public static void main(@NotNull String[] args) {
@@ -46,6 +45,11 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 	@Override
 	public boolean useRouteShortNameForRouteId() {
 		return false;  // used by GTFS-RT
+	}
+
+	@Override
+	public @Nullable String getRouteIdCleanupRegex() {
+		return "\\-KEL$";
 	}
 
 	@Override
@@ -130,7 +134,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 	private static final Pattern FIX_EXCHANGE = CleanUtils.cleanWord("ex");
 	private static final String FIX_EXCHANGE_REPLACEMENT = CleanUtils.cleanWordsReplacement("exchange");
 
-	private static final Pattern STARTS_WITH_NUMBER = Pattern.compile("(^[\\d]+[\\S]*)", Pattern.CASE_INSENSITIVE);
+	private static final Pattern STARTS_WITH_NUMBER = Pattern.compile("(^\\d+\\S*)", Pattern.CASE_INSENSITIVE);
 
 	private static final Pattern STARTS_WITH_DASH = Pattern.compile("(^.* - )", Pattern.CASE_INSENSITIVE);
 
