@@ -49,7 +49,7 @@ public class KelownaRegionalTransitSystemBusAgencyTools extends DefaultAgencyToo
 
 	@Override
 	public @Nullable String getRouteIdCleanupRegex() {
-		return "\\-KEL$";
+		return "\\-[A-Z]+$";
 	}
 
 	@Override
